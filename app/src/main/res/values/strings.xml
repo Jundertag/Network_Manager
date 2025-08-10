@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WiFi Manager</string>
+    <string name="menu_wifi">Access Points</string>
+    <string name="button_ap_refresh">Refresh</string>
+    <string name="ap_row_ssid"><![CDATA[<Hidden SSID>]]></string>
+    <string name="ap_image_refresh_description">This is a Refresh Icon</string>
+</resources>
