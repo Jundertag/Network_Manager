@@ -1,7 +1,7 @@
 package com.jayden.wifimanager.features.scan.presentation
 
 import androidx.lifecycle.ViewModel
-import com.jayden.wifimanager.model.AccessPoint
+import com.jayden.wifimanager.features.models.AccessPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
