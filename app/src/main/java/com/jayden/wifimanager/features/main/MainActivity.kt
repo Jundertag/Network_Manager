@@ -6,6 +6,7 @@ import androidx.fragment.app.commit
 import com.jayden.wifimanager.R
 import com.jayden.wifimanager.databinding.ActivityMainBinding
 import com.jayden.wifimanager.features.scan.ui.ApScanFragment
+import com.jayden.wifimanager.features.details.ui.ApDetailsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,10 +27,17 @@ class MainActivity : AppCompatActivity() {
                     }
                     true
                 }
+                R.id.menu_ap_details -> {
+                    supportFragmentManager.commit {
+                        setReorderingAllowed(true)
+                        replace(R.id.fragment_container, ApDetailsFragment())
+                    }
+                    true
+                }
                 else -> false
             }
         }
-
+        // Default screen should be R.id.menu_app_scan
         if (savedInstanceState == null) {
             bottomNav.selectedItemId = R.id.menu_ap_scan
         }

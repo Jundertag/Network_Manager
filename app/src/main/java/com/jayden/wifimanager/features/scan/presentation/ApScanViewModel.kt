@@ -1,25 +1,88 @@
 package com.jayden.wifimanager.features.scan.presentation
 
+import android.content.Context
+import android.net.wifi.ScanResult
+import android.os.Build
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import androidx.room.util.copy
 import com.jayden.wifimanager.features.models.AccessPoint
+import com.jayden.wifimanager.features.scan.data.WiFiScanner
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class ApScanViewModel : ViewModel() {
+class ApScanViewModel(
+    private val scanner: WiFiScanner
+) : ViewModel() {
+
     private val _items = MutableStateFlow<List<AccessPoint>>(emptyList())
-    val items: StateFlow<List<AccessPoint>> = _items
+    private val _scanning = MutableStateFlow(false)
+    private val _lastScanOk = MutableStateFlow(false)
 
-    fun setResults(newList: List<AccessPoint>) {
-        _items.value = newList
+    val items: StateFlow<List<AccessPoint>> = _items.asStateFlow()
+    val scanning: StateFlow<Boolean> = _scanning.asStateFlow()
+
+    private var collectJob: Job? = null
+
+    fun start() {
+        Log.d(TAG, "start()")
+        if (_scanning.value) return
+        scanner.start()
+        refresh()
     }
 
-    fun updateOne(updated: AccessPoint) {
-        val map = _items.value.associateBy { it.bssid }.toMutableMap()
-        map[updated.bssid] = updated
-        _items.value = map.values.toList()
+    fun stop() {
+        Log.d(TAG, "stop()")
+        collectJob?.cancel()
+        scanner.stop()
+        _scanning.value = false
     }
 
-    fun clear() {
-        _items.value = emptyList()
+    fun refresh() {
+        Log.d(TAG, "refresh()")
+        val ok = scanner.requestScan()
+        Log.d(TAG, "live scan $ok")
+        collectJob = viewModelScope.launch {
+            scanner.scanResults.collectLatest { results ->
+                // new results arrived -> update list and mark scan done
+                _items.value = results.map { it.toAp() }
+                _scanning.value = false
+            }
+        }
+        _lastScanOk.value = ok
+        if (ok) _scanning.value = true
+    }
+
+    private fun ScanResult.toAp(): AccessPoint {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            AccessPoint(
+                ssid = wifiSsid?.toString()?.removeSurrounding("\"")?.ifBlank { "<Hidden SSID>" } ?: "<Hidden SSID>",
+                bssid = BSSID ?: ""
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            AccessPoint(
+                ssid = SSID.ifBlank { "<Hidden SSID>" },
+                bssid = BSSID ?: ""
+            )
+        }
+    }
+
+    companion object {
+        private const val TAG = "ApScanViewModel"
+        fun factory(context: Context): ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return ApScanViewModel(WiFiScanner(context.applicationContext)) as T
+                }
+            }
     }
 }

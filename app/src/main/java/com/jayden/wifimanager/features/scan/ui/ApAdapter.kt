@@ -17,8 +17,9 @@ class ApAdapter(
         override fun areContentsTheSame(a: AccessPoint, b: AccessPoint) = a == b
     }
 
-    inner class ApViewHolder(private val binding: RowApBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ApViewHolder(
+        private val binding: RowApBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(accessPoint: AccessPoint) {
             binding.ssidText.text = accessPoint.ssid
             binding.bssidText.text = accessPoint.bssid
