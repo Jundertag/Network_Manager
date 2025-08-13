@@ -7,7 +7,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.room.util.copy
 import com.jayden.wifimanager.features.models.AccessPoint
 import com.jayden.wifimanager.features.scan.data.WiFiScanner
 import kotlinx.coroutines.Job
@@ -15,7 +14,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ApScanViewModel(
@@ -64,13 +62,15 @@ class ApScanViewModel(
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             AccessPoint(
                 ssid = wifiSsid?.toString()?.removeSurrounding("\"")?.ifBlank { "<Hidden SSID>" } ?: "<Hidden SSID>",
-                bssid = BSSID ?: ""
+                bssid = BSSID ?: "",
+                capabilities = capabilities
             )
         } else {
             @Suppress("DEPRECATION")
             AccessPoint(
                 ssid = SSID.ifBlank { "<Hidden SSID>" },
-                bssid = BSSID ?: ""
+                bssid = BSSID ?: "",
+                capabilities = capabilities
             )
         }
     }

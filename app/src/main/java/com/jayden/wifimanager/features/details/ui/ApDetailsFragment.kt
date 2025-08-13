@@ -5,9 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.jayden.wifimanager.databinding.FragmentApDetailsBinding
+import com.jayden.wifimanager.features.main.presentation.ApViewModel
+import com.jayden.wifimanager.features.models.AccessPoint
+import kotlinx.coroutines.launch
 
 class ApDetailsFragment : Fragment() {
+
+    private val apViewModel: ApViewModel by activityViewModels()
 
     private var _binding: FragmentApDetailsBinding? = null
     private val binding get() = _binding!!
@@ -23,5 +32,19 @@ class ApDetailsFragment : Fragment() {
             false
         )
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                apViewModel.selected.collect { ap ->
+                    ap?.let { render(it) }
+                }
+            }
+        }
+    }
+
+    private fun render(ap: AccessPoint) {
+        binding.title.text = ap.ssid
     }
 }

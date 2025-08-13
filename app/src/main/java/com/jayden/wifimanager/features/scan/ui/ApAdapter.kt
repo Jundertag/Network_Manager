@@ -1,5 +1,6 @@
 package com.jayden.wifimanager.features.scan.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -23,13 +24,18 @@ class ApAdapter(
         fun bind(accessPoint: AccessPoint) {
             binding.ssidText.text = accessPoint.ssid
             binding.bssidText.text = accessPoint.bssid
-            itemView.setOnClickListener { onClick(accessPoint) }
+            binding.capabilitiesText.text = accessPoint.capabilities
+            itemView.setOnClickListener {
+                onClick(accessPoint)
+                Log.d("ApAdapter", "onClick($accessPoint)")
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ApViewHolder(RowApBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-    override fun onBindViewHolder(holder: ApViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: ApViewHolder, position: Int) {
         holder.bind(getItem(position)) // <-- use getItem()
+    }
 }
