@@ -1,4 +1,4 @@
-package com.jayden.wifimanager.features.main
+package com.jayden.wifimanager.features.main.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.jayden.wifimanager.R
 import com.jayden.wifimanager.databinding.ActivityMainBinding
-import com.jayden.wifimanager.features.scan.ui.ApScanFragment
 import com.jayden.wifimanager.features.details.ui.ApDetailsFragment
+import com.jayden.wifimanager.features.scan.ui.ApScanFragment
 
 class MainActivity : AppCompatActivity() {
 

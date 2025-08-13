@@ -34,7 +34,6 @@ class WiFiScanner(appContext: Context) {
             if (intent.action == WifiManager.SCAN_RESULTS_AVAILABLE_ACTION) {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     _scanResults.tryEmit(wifi.scanResults ?: emptyList())
-                    Log.v(TAG, wifi.scanResults.toString())
                 }
             }
         }
@@ -42,6 +41,10 @@ class WiFiScanner(appContext: Context) {
 
     fun start() {
         if (isRegistered) return
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            _scanResults.tryEmit(wifi.scanResults ?: emptyList())
+        } else { return }
+
         val filter = IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context.registerReceiver(receiver, filter, Context.RECEIVER_EXPORTED)

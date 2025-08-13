@@ -1,7 +1,5 @@
 package com.jayden.wifimanager.features.scan.ui
 
-import android.Manifest
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jayden.wifimanager.databinding.FragmentApScanBinding
-import com.jayden.wifimanager.features.main.MainActivity
+import com.jayden.wifimanager.features.main.ui.MainActivity
 import com.jayden.wifimanager.features.scan.presentation.ApScanViewModel
-import com.jayden.wifimanager.features.main.PermissionHelper
+import com.jayden.wifimanager.features.main.presentation.PermissionHelper
 import com.jayden.wifimanager.features.main.presentation.ApViewModel
 import kotlinx.coroutines.launch
 

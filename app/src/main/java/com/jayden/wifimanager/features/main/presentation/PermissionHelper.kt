@@ -1,4 +1,4 @@
-package com.jayden.wifimanager.features.main
+package com.jayden.wifimanager.features.main.presentation
 
 import android.content.Context
 import android.content.pm.PackageManager
