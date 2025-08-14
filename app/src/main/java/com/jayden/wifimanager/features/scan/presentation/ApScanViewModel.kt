@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class ApScanViewModel(
-    private val scanner: WiFiScanner
+    private val wiFiScanner: WiFiScanner
 ) : ViewModel() {
 
     private val _items = MutableStateFlow<List<AccessPoint>>(emptyList())
@@ -32,30 +32,21 @@ class ApScanViewModel(
     fun start() {
         Log.d(TAG, "start()")
         if (_scanning.value) return
-        scanner.start()
-        refresh()
-    }
-
-    fun stop() {
-        Log.d(TAG, "stop()")
-        collectJob?.cancel()
-        scanner.stop()
-        _scanning.value = false
-    }
-
-    fun refresh() {
-        Log.d(TAG, "refresh()")
-        val ok = scanner.requestScan()
-        Log.d(TAG, "live scan $ok")
+        wiFiScanner.start()
         collectJob = viewModelScope.launch {
-            scanner.scanResults.collectLatest { results ->
+            wiFiScanner.scanResults.collectLatest { results ->
                 // new results arrived -> update list and mark scan done
                 _items.value = results.map { it.toAp() }
                 _scanning.value = false
             }
         }
-        _lastScanOk.value = ok
-        if (ok) _scanning.value = true
+    }
+
+    fun stop() {
+        Log.d(TAG, "stop()")
+        collectJob?.cancel()
+        wiFiScanner.stop()
+        _scanning.value = false
     }
 
     private fun ScanResult.toAp(): AccessPoint {

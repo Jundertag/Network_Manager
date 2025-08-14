@@ -5,8 +5,4 @@
         android:icon="@drawable/ic_wifi"
         android:title="@string/menu_wifi"/>
 
-    <item android:id="@+id/menu_ap_details"
-        android:icon="@drawable/ic_router"
-        android:title="@string/menu_wifi_details"/>
-
 </menu>

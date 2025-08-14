@@ -32,10 +32,7 @@ class ApScanFragment : Fragment() {
     }
     private lateinit var adapter: ApAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentApScanBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -43,7 +40,7 @@ class ApScanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = ApAdapter { ap ->
             apViewModel.select(ap)
-            (requireActivity() as? MainActivity)?.showDetailsTab()
+            (requireActivity() as? MainActivity)?.showApDetails()
         }
 
         permissionHelper = PermissionHelper(

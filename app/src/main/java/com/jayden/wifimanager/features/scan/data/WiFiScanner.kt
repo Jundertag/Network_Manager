@@ -40,10 +40,8 @@ class WiFiScanner(appContext: Context) {
     }
 
     fun start() {
+        Log.d(TAG, "start()")
         if (isRegistered) return
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            _scanResults.tryEmit(wifi.scanResults ?: emptyList())
-        } else { return }
 
         val filter = IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -53,17 +51,18 @@ class WiFiScanner(appContext: Context) {
             context.registerReceiver(receiver, filter)
         }
         isRegistered = true
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            _scanResults.tryEmit(wifi.scanResults ?: emptyList())
+        } else {
+            return
+        }
     }
 
     fun stop() {
+        Log.d(TAG, "stop()")
         if (!isRegistered) return
         runCatching { context.unregisterReceiver(receiver) }
         isRegistered = false
-    }
-
-    fun requestScan(): Boolean {
-        // Best-effort; might be throttled or ignored
-        @Suppress("DEPRECATION")
-        return runCatching { wifi.startScan() }.getOrDefault(false)
     }
 }

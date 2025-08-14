@@ -11,9 +11,12 @@ import com.jayden.wifimanager.features.models.AccessPoint
 
 class ApAdapter(
     private val onClick: (AccessPoint) -> Unit
-) : ListAdapter<AccessPoint, ApAdapter.ApViewHolder>(Diff) {
+) : ListAdapter<AccessPoint, ApAdapter.ApViewHolder>(DiffCallback) {
+    companion object {
+        private const val TAG = "ApAdapter"
+    }
 
-    object Diff : DiffUtil.ItemCallback<AccessPoint>() {
+    object DiffCallback : DiffUtil.ItemCallback<AccessPoint>() {
         override fun areItemsTheSame(a: AccessPoint, b: AccessPoint) = a.bssid == b.bssid
         override fun areContentsTheSame(a: AccessPoint, b: AccessPoint) = a == b
     }
@@ -26,8 +29,10 @@ class ApAdapter(
             binding.bssidText.text = accessPoint.bssid
             binding.capabilitiesText.text = accessPoint.capabilities
             itemView.setOnClickListener {
+                Log.d(TAG, "onClick($accessPoint)")
+                itemView.isEnabled = false
                 onClick(accessPoint)
-                Log.d("ApAdapter", "onClick($accessPoint)")
+                itemView.postDelayed({ itemView.isEnabled = true }, 350)
             }
         }
     }
@@ -35,7 +40,7 @@ class ApAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ApViewHolder(RowApBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-    override fun onBindViewHolder(holder: ApViewHolder, position: Int) {
-        holder.bind(getItem(position)) // <-- use getItem()
+    override fun onBindViewHolder(apViewHolder: ApViewHolder, position: Int) {
+        apViewHolder.bind(getItem(position)) // <-- use getItem()
     }
 }
