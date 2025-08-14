@@ -22,7 +22,6 @@ class ApScanViewModel(
 
     private val _items = MutableStateFlow<List<AccessPoint>>(emptyList())
     private val _scanning = MutableStateFlow(false)
-    private val _lastScanOk = MutableStateFlow(false)
 
     val items: StateFlow<List<AccessPoint>> = _items.asStateFlow()
     val scanning: StateFlow<Boolean> = _scanning.asStateFlow()

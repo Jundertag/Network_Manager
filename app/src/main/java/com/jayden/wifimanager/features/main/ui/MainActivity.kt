@@ -3,8 +3,6 @@ package com.jayden.wifimanager.features.main.ui
 import android.os.Bundle
 import android.view.View
 import android.util.Log
-import android.window.OnBackInvokedDispatcher
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -14,7 +12,6 @@ import com.jayden.wifimanager.databinding.ActivityMainBinding
 import com.jayden.wifimanager.features.details.ui.ApDetailsFragment
 import com.jayden.wifimanager.features.scan.ui.ApScanFragment
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
 
 class MainActivity : AppCompatActivity() {
 
