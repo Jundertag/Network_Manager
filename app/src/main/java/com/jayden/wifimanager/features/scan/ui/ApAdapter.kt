@@ -17,8 +17,24 @@ class ApAdapter(
     }
 
     object DiffCallback : DiffUtil.ItemCallback<AccessPoint>() {
-        override fun areItemsTheSame(a: AccessPoint, b: AccessPoint) = a.bssid == b.bssid
-        override fun areContentsTheSame(a: AccessPoint, b: AccessPoint) = a == b
+        override fun areItemsTheSame(a: AccessPoint, b: AccessPoint): Boolean {
+            return a.bssid == b.bssid
+        }
+
+        override fun areContentsTheSame(a: AccessPoint, b: AccessPoint): Boolean {
+            return a == b
+        }
+
+        override fun getChangePayload(oldItem: AccessPoint, newItem: AccessPoint): Any? {
+            return if (oldItem.rssi != newItem.rssi &&
+                oldItem.ssid == newItem.ssid &&
+                oldItem.capabilities == newItem.capabilities
+            ) {
+                newItem.rssi
+            } else {
+                null
+            }
+        }
     }
 
     inner class ApViewHolder(
@@ -39,12 +55,35 @@ class ApAdapter(
                 itemView.postDelayed({ itemView.isEnabled = true }, 350)
             }
         }
+
+        fun bindRssi(rssi: Int) {
+            binding.rssiText.text = buildString {
+                append(rssi)
+                append(" dBm")
+            }
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ApViewHolder(RowApBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = RowApBinding.inflate(inflater, parent, false)
+        return ApViewHolder(binding)
+    }
 
     override fun onBindViewHolder(apViewHolder: ApViewHolder, position: Int) {
         apViewHolder.bind(getItem(position)) // <-- use getItem()
+    }
+
+    override fun onBindViewHolder(apViewHolder: ApViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(apViewHolder, position)
+        }
+
+        val rssi = payloads.lastOrNull() as? Int
+        if (rssi != null) {
+            apViewHolder.bindRssi(rssi)
+        } else {
+            onBindViewHolder(apViewHolder, position)
+        }
     }
 }

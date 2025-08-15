@@ -31,13 +31,13 @@ class ApDetailsFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        Log.d(TAG, "onCreateView()")
+        Log.v(TAG, "onCreateView($inflater: LayoutInflater, $container: ViewGroup?, $savedInstanceState: Bundle?): View")
         _binding = FragmentApDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d(TAG, "onViewCreated()")
+        Log.v(TAG, "onViewCreated($view: View, $savedInstanceState: Bundle?)")
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 apViewModel.selected.collect { ap ->
@@ -48,11 +48,17 @@ class ApDetailsFragment : Fragment() {
     }
 
     private fun render(ap: AccessPoint?) {
-        Log.d(TAG, "$ap: AccessPoint?")
+        Log.v(TAG, "render($ap): AccessPoint?")
         if (ap != null) {
             binding.title.text = ap.ssid
             binding.bssidData.text = ap.bssid
             binding.rssiData.text = ap.rssi.toString()
         }
+    }
+
+    override fun onDestroyView() {
+        Log.v(TAG, "onDestroyView()")
+        super.onDestroyView()
+        _binding = null
     }
 }

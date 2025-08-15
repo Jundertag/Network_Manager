@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun FragmentTransaction.setDefaultAnimations(): FragmentTransaction {
-        Log.d(TAG, "setDefaultAnimations()")
+        Log.v(TAG, "setDefaultAnimations()")
         return this.setCustomAnimations(
             R.anim.slide_in_right,
             R.anim.slide_out_right,
@@ -41,9 +41,12 @@ class MainActivity : AppCompatActivity() {
 
 
     inner class OnBackStackChangedListener : FragmentManager.OnBackStackChangedListener {
-        override fun onBackStackChanged() {}
+        override fun onBackStackChanged() {
+            Log.v(TAG, "onBackStackChanged()")
+        }
 
         override fun onBackStackChangeCommitted(fragment: Fragment, pop: Boolean) {
+            Log.v(TAG, "onBackStackChangeCommitted($fragment: Fragment, $pop: Boolean)")
             if (pop) {
                 unblockTouch()
             } else if (supportFragmentManager.backStackEntryCount > 0) {
@@ -53,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.v(TAG, "onCreate($savedInstanceState)")
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
@@ -88,20 +92,23 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             binding.bottomNav.selectedItemId = R.id.menu_ap_scan
         }
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        Log.v(TAG, "onSaveInstanceState($outState)")
         super.onSaveInstanceState(outState)
         outState.putString("activeTag", activeTag)
     }
 
     override fun onDestroy() {
+        Log.v(TAG, "onDestroy()")
         super.onDestroy()
         supportFragmentManager.removeOnBackStackChangedListener(backStackListener)
     }
 
     private fun addFragment(fragment: Fragment, tag: String) {
-        Log.d(TAG, "addFragment($fragment, $tag)")
+        Log.d(TAG, "addFragment($fragment: Fragment, $tag: String)")
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             add(R.id.fragment_container, fragment, tag)
@@ -110,7 +117,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showFragment(tag: String) {
-        Log.d(TAG, "showFragment($tag)")
+        Log.d(TAG, "showFragment($tag: String)")
         val activeFragment = supportFragmentManager.findFragmentByTag(activeTag)
         val targetFragment = supportFragmentManager.findFragmentByTag(tag) ?: throw IllegalStateException("Tag cannot be null")
 
@@ -127,7 +134,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideFragment(tag: String) {
-        Log.d(TAG, "hideFragment($tag)")
+        Log.d(TAG, "hideFragment($tag: String)")
         val fragment = supportFragmentManager.findFragmentByTag(tag)
         if (fragment != null) {
             supportFragmentManager.commit {
@@ -138,7 +145,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showDetailFragment(tag: String) {
-        Log.d(TAG, "showDetailFragment($tag)")
+        Log.d(TAG, "showDetailFragment($tag: String)")
 
         if (supportFragmentManager.findFragmentByTag(tag)?.isAdded == true) return
 
@@ -153,7 +160,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun blockTouch() {
-        Log.d(TAG, "blockTouch()")
+        Log.i(TAG, "blockTouch()")
         binding.fragmentDetailsContainer.apply {
             isClickable = true
             isFocusable = true
@@ -161,7 +168,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun unblockTouch() {
-        Log.d(TAG, "unblockTouch()")
+        Log.i(TAG, "unblockTouch()")
         binding.fragmentDetailsContainer.apply {
             isClickable = false
             isFocusable = false
@@ -169,7 +176,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showApDetails() {
-        Log.d(TAG, "showApDetails()")
+        Log.v(TAG, "showApDetails()")
         showDetailFragment(TAG_DETAILS)
     }
 }

@@ -29,7 +29,7 @@ class ApScanViewModel(
     private var collectJob: Job? = null
 
     fun start() {
-        Log.d(TAG, "start()")
+        Log.v(TAG, "start()")
         if (_scanning.value) return
         wiFiScanner.start()
         _scanning.value = true
@@ -42,7 +42,7 @@ class ApScanViewModel(
     }
 
     fun stop() {
-        Log.d(TAG, "stop()")
+        Log.v(TAG, "stop()")
         collectJob?.cancel()
         wiFiScanner.stop()
         _scanning.value = false

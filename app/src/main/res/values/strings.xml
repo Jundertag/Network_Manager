@@ -9,4 +9,5 @@
     <string name="wifi_icon_description">This is a wifi icon that adapts to received signal strength</string>
     <string name="bssid_title">BSSID:</string>
     <string name="rssi_title">RSSI:</string>
+    <string name="dialog_tips">Tip:</string>
 </resources>
