@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "WiFi Manager"
+rootProject.name = "Network Manager"
 include(":app")
