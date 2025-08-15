@@ -1,4 +1,4 @@
-package com.jayden.networkmanager.features.details.ui
+package com.jayden.networkmanager.features.ui.apdetails
 
 import android.os.Bundle
 import android.util.Log
@@ -12,9 +12,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.jayden.networkmanager.databinding.FragmentApDetailsBinding
-import com.jayden.networkmanager.features.details.presentation.ApDetailsViewModel
-import com.jayden.networkmanager.features.main.presentation.ApViewModel
-import com.jayden.networkmanager.features.models.AccessPoint
+import com.jayden.networkmanager.features.datamodels.AccessPoint
+import com.jayden.networkmanager.features.presentation.apdetails.ApDetailsViewModel
+import com.jayden.networkmanager.features.presentation.main.ApViewModel
 import kotlinx.coroutines.launch
 
 class ApDetailsFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.jayden.networkmanager.features.scan.data
+package com.jayden.networkmanager.features.data.wifi
 
 import android.content.Context
 import android.net.ConnectivityManager

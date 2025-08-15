@@ -1,4 +1,4 @@
-package com.jayden.networkmanager.features.scan.ui
+package com.jayden.networkmanager.features.ui.apscan
 
 import android.Manifest
 import android.os.Build
@@ -16,12 +16,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jayden.networkmanager.databinding.FragmentApScanBinding
-import com.jayden.networkmanager.features.main.ui.MainActivity
-import com.jayden.networkmanager.features.scan.presentation.ApScanViewModel
-import com.jayden.networkmanager.features.main.presentation.PermissionHelper
-import com.jayden.networkmanager.features.main.presentation.ApViewModel
+import com.jayden.networkmanager.features.presentation.apscan.ApScanViewModel
+import com.jayden.networkmanager.features.presentation.main.ApViewModel
+import com.jayden.networkmanager.features.ui.apscan.ApAdapter
+import com.jayden.networkmanager.features.ui.main.MainActivity
+import com.jayden.networkmanager.features.ui.permissions.PermissionHelper
 import kotlinx.coroutines.launch
-
 
 class ApScanFragment : Fragment() {
 
@@ -36,7 +36,7 @@ class ApScanFragment : Fragment() {
     private lateinit var permissionHelper: PermissionHelper
 
     private val vm: ApScanViewModel by viewModels {
-        ApScanViewModel.factory(requireContext().applicationContext)
+        ApScanViewModel.Companion.factory(requireContext().applicationContext)
     }
     private lateinit var adapter: ApAdapter
 

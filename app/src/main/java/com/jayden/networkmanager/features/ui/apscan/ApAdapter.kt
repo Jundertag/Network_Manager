@@ -1,4 +1,4 @@
-package com.jayden.networkmanager.features.scan.ui
+package com.jayden.networkmanager.features.ui.apscan
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jayden.networkmanager.databinding.RowApBinding
-import com.jayden.networkmanager.features.models.AccessPoint
+import com.jayden.networkmanager.features.datamodels.AccessPoint
 
 class ApAdapter(
     private val onClick: (AccessPoint) -> Unit

@@ -1,17 +1,17 @@
-package com.jayden.networkmanager.features.main.ui
+package com.jayden.networkmanager.features.ui.main
 
 import android.os.Bundle
-import android.view.View
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import com.jayden.networkmanager.R
 import com.jayden.networkmanager.databinding.ActivityMainBinding
-import com.jayden.networkmanager.features.details.ui.ApDetailsFragment
-import com.jayden.networkmanager.features.scan.ui.ApScanFragment
-import androidx.fragment.app.FragmentManager
+import com.jayden.networkmanager.features.ui.apdetails.ApDetailsFragment
+import com.jayden.networkmanager.features.ui.apscan.ApScanFragment
 
 class MainActivity : AppCompatActivity() {
 

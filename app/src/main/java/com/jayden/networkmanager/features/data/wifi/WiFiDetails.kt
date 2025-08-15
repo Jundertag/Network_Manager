@@ -1,10 +1,10 @@
-package com.jayden.networkmanager.features.details.data
+package com.jayden.networkmanager.features.data.wifi
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
-import com.jayden.networkmanager.features.details.presentation.ApDetailsViewModel
+import com.jayden.networkmanager.features.presentation.apdetails.ApDetailsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -14,7 +14,8 @@ class WiFiDetails(appContext: Context) {
 
     private val apDetailsViewModel = ApDetailsViewModel(this)
 
-    private val connectivityManager: ConnectivityManager = context.getSystemService(ConnectivityManager::class.java)
+    private val connectivityManager: ConnectivityManager = context.getSystemService(
+        ConnectivityManager::class.java)
 
     private val _activeNetwork = MutableStateFlow<Network?>(null)
     val activeNetwork: StateFlow<Network?> = _activeNetwork
