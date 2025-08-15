@@ -1,4 +1,4 @@
-package com.jayden.wifimanager.features.details.ui
+package com.jayden.networkmanager.features.details.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -11,10 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.jayden.wifimanager.databinding.FragmentApDetailsBinding
-import com.jayden.wifimanager.features.details.presentation.ApDetailsViewModel
-import com.jayden.wifimanager.features.main.presentation.ApViewModel
-import com.jayden.wifimanager.features.models.AccessPoint
+import com.jayden.networkmanager.databinding.FragmentApDetailsBinding
+import com.jayden.networkmanager.features.details.presentation.ApDetailsViewModel
+import com.jayden.networkmanager.features.main.presentation.ApViewModel
+import com.jayden.networkmanager.features.models.AccessPoint
 import kotlinx.coroutines.launch
 
 class ApDetailsFragment : Fragment() {

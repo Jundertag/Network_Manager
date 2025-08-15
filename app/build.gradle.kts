@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.jayden.wifimanager"
+    namespace = "com.jayden.networkmanager"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.jayden.wifimanager"
+        applicationId = "com.jayden.networkmanager"
         minSdk = 31
         targetSdk = 36
         versionCode = 1

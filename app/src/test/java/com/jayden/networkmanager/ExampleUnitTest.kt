@@ -1,4 +1,4 @@
-package com.jayden.wifimanager
+package com.jayden.networkmanager
 
 import org.junit.Test
 

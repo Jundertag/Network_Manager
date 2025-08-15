@@ -1,4 +1,4 @@
-package com.jayden.wifimanager.features.scan.ui
+package com.jayden.networkmanager.features.scan.ui
 
 import android.Manifest
 import android.os.Build
@@ -15,11 +15,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jayden.wifimanager.databinding.FragmentApScanBinding
-import com.jayden.wifimanager.features.main.ui.MainActivity
-import com.jayden.wifimanager.features.scan.presentation.ApScanViewModel
-import com.jayden.wifimanager.features.main.presentation.PermissionHelper
-import com.jayden.wifimanager.features.main.presentation.ApViewModel
+import com.jayden.networkmanager.databinding.FragmentApScanBinding
+import com.jayden.networkmanager.features.main.ui.MainActivity
+import com.jayden.networkmanager.features.scan.presentation.ApScanViewModel
+import com.jayden.networkmanager.features.main.presentation.PermissionHelper
+import com.jayden.networkmanager.features.main.presentation.ApViewModel
 import kotlinx.coroutines.launch
 
 

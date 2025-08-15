@@ -1,10 +1,10 @@
-package com.jayden.wifimanager.features.details.data
+package com.jayden.networkmanager.features.details.data
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
-import com.jayden.wifimanager.features.details.presentation.ApDetailsViewModel
+import com.jayden.networkmanager.features.details.presentation.ApDetailsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

@@ -1,4 +1,4 @@
-package com.jayden.wifimanager.features.scan.presentation
+package com.jayden.networkmanager.features.scan.presentation
 
 import android.content.Context
 import android.net.wifi.ScanResult
@@ -7,8 +7,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.jayden.wifimanager.features.models.AccessPoint
-import com.jayden.wifimanager.features.scan.data.WiFiScanner
+import com.jayden.networkmanager.features.models.AccessPoint
+import com.jayden.networkmanager.features.scan.data.WiFiScanner
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

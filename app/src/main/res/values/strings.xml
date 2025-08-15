@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WiFi Manager</string>
+    <string name="app_name">Network Manager</string>
     <string name="menu_wifi">Access Points</string>
     <string name="menu_wifi_details">AP Details</string>
     <string name="button_ap_refresh">Refresh</string>

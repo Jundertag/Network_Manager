@@ -1,4 +1,4 @@
-package com.jayden.wifimanager.features.scan.ui
+package com.jayden.networkmanager.features.scan.ui
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.jayden.wifimanager.databinding.RowApBinding
-import com.jayden.wifimanager.features.models.AccessPoint
+import com.jayden.networkmanager.databinding.RowApBinding
+import com.jayden.networkmanager.features.models.AccessPoint
 
 class ApAdapter(
     private val onClick: (AccessPoint) -> Unit
