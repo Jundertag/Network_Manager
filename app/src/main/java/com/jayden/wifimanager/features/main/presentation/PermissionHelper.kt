@@ -59,8 +59,8 @@ class PermissionHelper(
         return PermissionsCallback(granted, denied, permanentlyDenied, result)
     }
 
-    private fun isGranted(p: String) =
-        ContextCompat.checkSelfPermission(context, p) == PackageManager.PERMISSION_GRANTED
+    private fun isGranted(permission: String) =
+        ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 
-    private fun isNotGranted(p: String) = !isGranted(p)
+    private fun isNotGranted(permission: String) = !isGranted(permission)
 }

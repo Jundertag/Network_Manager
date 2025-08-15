@@ -5,6 +5,9 @@ import com.jayden.wifimanager.features.details.data.WiFiDetails
 import com.jayden.wifimanager.features.details.ui.ApDetailsFragment
 
 class ApDetailsViewModel(
-    private val details: WiFiDetails
+    private val wifiDetails: WiFiDetails
 ) : ViewModel() {
+
+    val activeNetwork = wifiDetails.activeNetwork
+    val capabilities = wifiDetails.capabilities
 }

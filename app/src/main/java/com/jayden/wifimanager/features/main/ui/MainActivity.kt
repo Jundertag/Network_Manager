@@ -11,7 +11,7 @@ import com.jayden.wifimanager.R
 import com.jayden.wifimanager.databinding.ActivityMainBinding
 import com.jayden.wifimanager.features.details.ui.ApDetailsFragment
 import com.jayden.wifimanager.features.scan.ui.ApScanFragment
-import androidx.core.view.isGone
+import androidx.fragment.app.FragmentManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,11 +37,26 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var activeTag: String
 
+    private val backStackListener = OnBackStackChangedListener()
+
+
+    inner class OnBackStackChangedListener : FragmentManager.OnBackStackChangedListener {
+        override fun onBackStackChanged() {}
+
+        override fun onBackStackChangeCommitted(fragment: Fragment, pop: Boolean) {
+            if (pop) {
+                unblockTouch()
+            } else if (supportFragmentManager.backStackEntryCount > 0) {
+                blockTouch()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        supportFragmentManager.addOnBackStackChangedListener { unblockTouch() }
+        supportFragmentManager.addOnBackStackChangedListener(backStackListener)
 
         if (savedInstanceState == null) {
             addFragment(ApScanFragment(), TAG_SCAN)
@@ -65,10 +80,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.menu_ap_scan    -> TAG_SCAN
                 else -> return@setOnItemSelectedListener false
             }
-            if (activeTag == TAG_SCAN && binding.fragmentDetailsContainer.isGone) {
-                return@setOnItemSelectedListener true
-            }
-
+            if (targetTag == activeTag) return@setOnItemSelectedListener true
             showFragment(targetTag)
             true
         }
@@ -81,6 +93,11 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("activeTag", activeTag)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        supportFragmentManager.removeOnBackStackChangedListener(backStackListener)
     }
 
     private fun addFragment(fragment: Fragment, tag: String) {
@@ -123,18 +140,20 @@ class MainActivity : AppCompatActivity() {
     private fun showDetailFragment(tag: String) {
         Log.d(TAG, "showDetailFragment($tag)")
 
+        if (supportFragmentManager.findFragmentByTag(tag)?.isAdded == true) return
+
         binding.fragmentDetailsContainer.visibility = View.VISIBLE
 
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             setDefaultAnimations()
             add(R.id.fragment_details_container, ApDetailsFragment(), tag)
-            blockTouch()
             addToBackStack(BACK_STACK_DETAILS)
         }
     }
 
     private fun blockTouch() {
+        Log.d(TAG, "blockTouch()")
         binding.fragmentDetailsContainer.apply {
             isClickable = true
             isFocusable = true
@@ -142,6 +161,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun unblockTouch() {
+        Log.d(TAG, "unblockTouch()")
         binding.fragmentDetailsContainer.apply {
             isClickable = false
             isFocusable = false

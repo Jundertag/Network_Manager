@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
-import androidx.core.content.ContextCompat.getSystemService
 import com.jayden.wifimanager.features.details.presentation.ApDetailsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,6 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 class WiFiDetails(appContext: Context) {
 
     private val context: Context = appContext.applicationContext
+
+    private val apDetailsViewModel = ApDetailsViewModel(this)
 
     private val connectivityManager: ConnectivityManager = context.getSystemService(ConnectivityManager::class.java)
 
@@ -21,7 +22,7 @@ class WiFiDetails(appContext: Context) {
     private val _capabilities = MutableStateFlow<NetworkCapabilities?>(null)
     val capabilities: StateFlow<NetworkCapabilities?> = _capabilities
 
-    private val callback = object : ConnectivityManager.NetworkCallback() {
+    private val callback = object : ConnectivityManager.NetworkCallback(FLAG_INCLUDE_LOCATION_INFO) {
         override fun onAvailable(network: Network) {
             _activeNetwork.value = network
             _capabilities.value = connectivityManager.getNetworkCapabilities(network)

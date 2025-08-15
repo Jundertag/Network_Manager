@@ -6,4 +6,7 @@
     <string name="ap_row_ssid"><![CDATA[<Hidden SSID>]]></string>
     <string name="ap_image_refresh_description">This is a Refresh Icon</string>
     <string name="ap_scan_title">Access Points</string>
+    <string name="wifi_icon_description">This is a wifi icon that adapts to received signal strength</string>
+    <string name="bssid_title">BSSID:</string>
+    <string name="rssi_title">RSSI:</string>
 </resources>

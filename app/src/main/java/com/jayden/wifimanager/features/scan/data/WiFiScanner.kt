@@ -36,6 +36,12 @@ class WiFiScanner(appContext: Context) {
                     _scanResults.tryEmit(wifi.scanResults ?: emptyList())
                 }
             }
+
+            if (intent.action == WifiManager.RSSI_CHANGED_ACTION) {
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    _scanResults.tryEmit(wifi.scanResults ?: emptyList())
+                }
+            }
         }
     }
 

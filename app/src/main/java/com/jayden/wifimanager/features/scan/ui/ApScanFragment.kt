@@ -45,8 +45,11 @@ class ApScanFragment : Fragment() {
 
         permissionHelper = PermissionHelper(
             requireContext(),
-            this
-        ) { permission -> shouldShowRequestPermissionRationale(permission) }
+            this,
+            shouldShowRationale = { permission ->
+                requireActivity().shouldShowRequestPermissionRationale(permission)
+            }
+        )
 
         binding.apScanRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())

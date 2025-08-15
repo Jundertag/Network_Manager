@@ -27,6 +27,10 @@ class ApAdapter(
         fun bind(accessPoint: AccessPoint) {
             binding.ssidText.text = accessPoint.ssid
             binding.bssidText.text = accessPoint.bssid
+            binding.rssiText.text = buildString {
+                append(accessPoint.rssi)
+                append(" dBm")
+            }
             binding.capabilitiesText.text = accessPoint.capabilities
             itemView.setOnClickListener {
                 Log.d(TAG, "onClick($accessPoint)")

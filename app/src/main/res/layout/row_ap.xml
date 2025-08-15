@@ -56,6 +56,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bssidText"/>
 
+            <TextView
+                android:id="@+id/rssiText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-50 dBm"
+                android:layout_marginEnd="8dp"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ssidText"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

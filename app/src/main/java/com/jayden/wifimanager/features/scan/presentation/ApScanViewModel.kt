@@ -32,11 +32,11 @@ class ApScanViewModel(
         Log.d(TAG, "start()")
         if (_scanning.value) return
         wiFiScanner.start()
+        _scanning.value = true
         collectJob = viewModelScope.launch {
             wiFiScanner.scanResults.collectLatest { results ->
                 // new results arrived -> update list and mark scan done
                 _items.value = results.map { it.toAp() }
-                _scanning.value = false
             }
         }
     }
@@ -53,6 +53,7 @@ class ApScanViewModel(
             AccessPoint(
                 ssid = wifiSsid?.toString()?.removeSurrounding("\"")?.ifBlank { "<Hidden SSID>" } ?: "<Hidden SSID>",
                 bssid = BSSID ?: "",
+                rssi = level,
                 capabilities = capabilities
             )
         } else {
@@ -60,6 +61,7 @@ class ApScanViewModel(
             AccessPoint(
                 ssid = SSID.ifBlank { "<Hidden SSID>" },
                 bssid = BSSID ?: "",
+                rssi = level,
                 capabilities = capabilities
             )
         }
