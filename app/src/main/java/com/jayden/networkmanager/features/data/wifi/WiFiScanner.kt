@@ -10,6 +10,7 @@ import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.jayden.networkmanager.features.presentation.apscan.ApScanViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -30,6 +31,8 @@ class WiFiScanner(appContext: Context) {
     val scanResults: Flow<List<ScanResult>> = _scanResults
 
     private var isRegistered = false
+
+    private val apScanViewModel = ApScanViewModel(this)
 
     private val callback = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -69,7 +72,9 @@ class WiFiScanner(appContext: Context) {
         Log.v(TAG, "refresh()")
         if (!isRegistered) return
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            wifiManager.startScan()
+            if (wifiManager.startScan()) {
+                apScanViewModel._manualScan.tryEmit(true)
+            }
         }
     }
 }

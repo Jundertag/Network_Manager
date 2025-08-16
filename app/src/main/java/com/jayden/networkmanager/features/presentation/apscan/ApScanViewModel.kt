@@ -22,9 +22,11 @@ class ApScanViewModel(
 
     private val _items = MutableStateFlow<List<AccessPoint>>(emptyList())
     private val _scanning = MutableStateFlow(false)
+    internal val _manualScan = MutableStateFlow(false)
 
     val items: StateFlow<List<AccessPoint>> = _items.asStateFlow()
     val scanning: StateFlow<Boolean> = _scanning.asStateFlow()
+    val manualScan: StateFlow<Boolean> = _manualScan.asStateFlow()
 
     private var collectJob: Job? = null
 

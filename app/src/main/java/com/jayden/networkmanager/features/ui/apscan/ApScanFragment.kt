@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jayden.networkmanager.databinding.FragmentApScanBinding
 import com.jayden.networkmanager.features.presentation.apscan.ApScanViewModel
 import com.jayden.networkmanager.features.presentation.main.ApViewModel
@@ -37,7 +38,6 @@ class ApScanFragment : Fragment() {
         ApScanViewModel.Companion.factory(requireContext().applicationContext)
     }
     private lateinit var adapter: ApAdapter
-
     private val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -64,6 +64,18 @@ class ApScanFragment : Fragment() {
                 }
             }
         )
+    }
+
+    private val refreshListener = object : SwipeRefreshLayout.OnRefreshListener {
+        override fun onRefresh() {
+            vm.refresh()
+        }
+    }
+
+    private val scrollUpCallback = object : SwipeRefreshLayout.OnChildScrollUpCallback {
+        override fun canChildScrollUp(parent: SwipeRefreshLayout, child: View): Boolean {
+            return binding.swipeRefresh.isRefreshing
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -101,9 +113,12 @@ class ApScanFragment : Fragment() {
             }
         }
 
-        binding.swipeRefresh.setOnRefreshListener {
-            vm.refresh()
+        val swipeRefreshLayout: SwipeRefreshLayout = binding.swipeRefresh
+        swipeRefreshLayout.setOnRefreshListener(refreshListener)
+        swipeRefreshLayout.setOnChildScrollUpCallback { _, _ ->
+            binding.swipeRefresh.isRefreshing
         }
+
     }
 
     override fun onStart() {
