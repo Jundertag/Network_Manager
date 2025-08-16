@@ -92,6 +92,18 @@ class ApScanFragment : Fragment() {
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                vm.scanning.collect { scanning ->
+                    binding.swipeRefresh.isRefreshing = scanning
+                }
+            }
+        }
+
+        binding.swipeRefresh.setOnRefreshListener {
+            vm.refresh()
+        }
     }
 
     override fun onStart() {

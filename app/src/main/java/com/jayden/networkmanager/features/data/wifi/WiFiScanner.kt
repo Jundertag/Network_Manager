@@ -66,7 +66,10 @@ class WiFiScanner(appContext: Context) {
     }
 
     fun refresh() {
+        Log.v(TAG, "refresh()")
         if (!isRegistered) return
-        wifiManager.startScan()
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            wifiManager.startScan()
+        }
     }
 }

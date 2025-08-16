@@ -48,6 +48,11 @@ class ApScanViewModel(
         _scanning.value = false
     }
 
+    fun refresh() {
+        Log.v(TAG, "refresh()")
+        wiFiScanner.refresh()
+    }
+
     private fun ScanResult.toAp(): AccessPoint {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             AccessPoint(
