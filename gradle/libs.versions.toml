@@ -12,6 +12,7 @@ lifecycle = "2.9.2"
 cardview = "1.0.0"
 constraintlayout = "2.2.1"
 roomKtx = "2.7.2"
+refresh = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -26,6 +27,7 @@ androidx-fragment = { group = "androidx.fragment", name = "fragment", version.re
 androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "refresh" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

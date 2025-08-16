@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     private lateinit var activeTag: String
 

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="32dp"
     android:orientation="vertical"
+    android:background="#80000000"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,7 +29,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="Scans are throttled"
+                android:text=""
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
@@ -39,7 +40,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/alert_title"
-                android:text="By default, the Access Point (AP) list will update every time the OS scans for new APs. The OS will scan every 20 to 160+ seconds depending on the quality of the connection. If you're disconnected from a network, the OS scans for APs periodically to find a network to connect to"
+                android:text=""
                 android:textSize="16sp"/>
 
             <TextView
@@ -61,7 +62,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="4dp"
-                android:text="Swipe down to Scan Manually. Be warned, this feature is deprecated as of Android 9 and above."
+                android:text=""
                 android:textSize="14sp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

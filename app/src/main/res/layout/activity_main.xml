@@ -34,4 +34,9 @@
         android:focusable="true"
         android:visibility="gone"/>
 
+    <FrameLayout
+        android:id="@+id/dialog_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,10 @@
 package com.jayden.networkmanager.features.data.wifi
 
 import android.Manifest
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
@@ -28,18 +31,16 @@ class WiFiScanner(appContext: Context) {
 
     private var isRegistered = false
 
-    private val callback = object : WifiManager.ScanResultsCallback() {
-        init {
-            Log.v(TAG, "ScanResultsCallback() Initialized")
-        }
-        override fun onScanResultsAvailable() {
-            Log.i(TAG, "onScanResultsAvailable()")
-            if (ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                _scanResults.tryEmit(wifiManager.scanResults.toList())
+    private val callback = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            Log.v(TAG, "onReceive($context, $intent)")
+            if (intent?.action == WifiManager.SCAN_RESULTS_AVAILABLE_ACTION) {
+                if (ContextCompat.checkSelfPermission(
+                        context!!,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED) {
+                    _scanResults.tryEmit(wifiManager.scanResults ?: emptyList())
+                }
             }
         }
     }
@@ -50,7 +51,7 @@ class WiFiScanner(appContext: Context) {
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             _scanResults.tryEmit(wifiManager.scanResults ?: emptyList())
-            wifiManager.registerScanResultsCallback(executor, callback)
+            context.registerReceiver(callback, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
             isRegistered = true
         } else {
             isRegistered = false
@@ -61,7 +62,11 @@ class WiFiScanner(appContext: Context) {
     fun stop() {
         Log.v(TAG, "stop()")
         if (!isRegistered) return
-        wifiManager.unregisterScanResultsCallback(callback)
         isRegistered = false
+    }
+
+    fun refresh() {
+        if (!isRegistered) return
+        wifiManager.startScan()
     }
 }

@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.jayden.networkmanager.features.data.wifi.WiFiScanner
-import com.jayden.networkmanager.features.datamodels.AccessPoint
+import com.jayden.networkmanager.features.datamodels.wifi.AccessPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -59,12 +59,12 @@ class ApScanViewModel(
             )
         } else {
             @Suppress("DEPRECATION")
-            (AccessPoint(
+            AccessPoint(
                 ssid = SSID.ifBlank { "<Hidden SSID>" },
                 bssid = BSSID ?: "",
                 rssi = level,
                 capabilities = capabilities
-            ))
+            )
         }
     }
 

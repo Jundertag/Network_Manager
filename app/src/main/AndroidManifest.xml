@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WiFiManager">
-        <activity android:name="networkmanager.features.main.ui.MainActivity"
+        <activity android:name="com.jayden.networkmanager.features.ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

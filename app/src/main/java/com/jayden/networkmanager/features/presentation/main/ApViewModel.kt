@@ -1,7 +1,7 @@
 package com.jayden.networkmanager.features.presentation.main
 
 import androidx.lifecycle.ViewModel
-import com.jayden.networkmanager.features.datamodels.AccessPoint
+import com.jayden.networkmanager.features.datamodels.wifi.AccessPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

@@ -12,7 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.jayden.networkmanager.databinding.FragmentApDetailsBinding
-import com.jayden.networkmanager.features.datamodels.AccessPoint
+import com.jayden.networkmanager.features.datamodels.wifi.AccessPoint
 import com.jayden.networkmanager.features.presentation.apdetails.ApDetailsViewModel
 import com.jayden.networkmanager.features.presentation.main.ApViewModel
 import kotlinx.coroutines.launch

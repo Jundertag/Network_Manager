@@ -20,7 +20,7 @@ import com.jayden.networkmanager.features.presentation.apscan.ApScanViewModel
 import com.jayden.networkmanager.features.presentation.main.ApViewModel
 import com.jayden.networkmanager.features.ui.apscan.ApAdapter
 import com.jayden.networkmanager.features.ui.main.MainActivity
-import com.jayden.networkmanager.features.ui.permissions.PermissionHelper
+import com.jayden.networkmanager.features.ui.permissions.PermissionManager
 import kotlinx.coroutines.launch
 
 class ApScanFragment : Fragment() {
@@ -33,12 +33,38 @@ class ApScanFragment : Fragment() {
     private var _binding: FragmentApScanBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var permissionHelper: PermissionHelper
-
     private val vm: ApScanViewModel by viewModels {
         ApScanViewModel.Companion.factory(requireContext().applicationContext)
     }
     private lateinit var adapter: ApAdapter
+
+    private val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.NEARBY_WIFI_DEVICES
+        )
+    } else {
+        arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+    }
+
+    private val permissionManager by lazy {
+        PermissionManager(
+            activity = requireActivity(),
+            context = requireContext(),
+            permissionResult = { permissions ->
+                val granted = permissions.values.all { it }
+                if (granted) {
+                    vm.start()
+                } else {
+                    Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         Log.v(TAG, "onCreateView($inflater: LayoutInflater, $container: ViewGroup?, $savedInstanceState: Bundle?): View")
@@ -52,14 +78,6 @@ class ApScanFragment : Fragment() {
             apViewModel.select(ap)
             (requireActivity() as? MainActivity)?.showApDetails()
         }
-
-        permissionHelper = PermissionHelper(
-            requireContext(),
-            this,
-            shouldShowRationale = { permission ->
-                requireActivity().shouldShowRequestPermissionRationale(permission)
-            }
-        )
 
         binding.apScanRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -79,25 +97,8 @@ class ApScanFragment : Fragment() {
     override fun onStart() {
         Log.v(TAG, "onStart()")
         super.onStart()
-
-        val perms = arrayOf(
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                Manifest.permission.ACCESS_COARSE_LOCATION
-                Manifest.permission.ACCESS_FINE_LOCATION
-                Manifest.permission.NEARBY_WIFI_DEVICES
-            } else {
-                Manifest.permission.ACCESS_COARSE_LOCATION
-                Manifest.permission.ACCESS_FINE_LOCATION
-            }
-        )
-
-        permissionHelper.request(perms) { callback ->
-            if (callback.granted.containsAll(callback.raw.keys)) {
-                vm.start()
-            } else { /* trigger on screen message */
-                Toast.makeText(requireContext(), "Permissions Denied, Results will not be accurate", Toast.LENGTH_SHORT).show()
-                Log.w(TAG, "Permissions Denied")
-            }
+        viewLifecycleOwner.lifecycleScope.launch {
+            permissionManager.requestPermissions(permissions)
         }
     }
 
