@@ -1,4 +1,4 @@
-package com.jayden.networkmanager.features.datamodels.wifi
+package com.jayden.networkmanager.features.domain.wifi
 
 data class AccessPoint(
     val bssid: String,

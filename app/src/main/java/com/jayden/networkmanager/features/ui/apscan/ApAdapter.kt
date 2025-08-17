@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jayden.networkmanager.databinding.RowApBinding
-import com.jayden.networkmanager.features.datamodels.wifi.AccessPoint
+import com.jayden.networkmanager.features.domain.wifi.AccessPoint
 
 class ApAdapter(
     private val onClick: (AccessPoint) -> Unit

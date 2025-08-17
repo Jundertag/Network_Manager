@@ -1,4 +1,4 @@
-package com.jayden.networkmanager.features.datamodels.dialogalert
+package com.jayden.networkmanager.features.domain.dialogalert
 
 data class DialogAlert(
     val title: String,

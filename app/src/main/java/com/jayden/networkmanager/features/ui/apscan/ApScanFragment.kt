@@ -30,11 +30,13 @@ class ApScanFragment : Fragment() {
         private const val TAG = "ApScanFragment"
     }
 
-    private val apViewModel: ApViewModel by activityViewModels()
+    private val apViewModel: ApViewModel by activityViewModels {
+        ApViewModel.Companion.factory(requireContext().applicationContext)
+    }
     private var _binding: FragmentApScanBinding? = null
     private val binding get() = _binding!!
 
-    private val vm: ApScanViewModel by viewModels {
+    private val viewModel: ApScanViewModel by viewModels {
         ApScanViewModel.Companion.factory(requireContext().applicationContext)
     }
     private lateinit var adapter: ApAdapter
@@ -58,24 +60,12 @@ class ApScanFragment : Fragment() {
             permissionResult = { permissions ->
                 val granted = permissions.values.all { it }
                 if (granted) {
-                    vm.start()
+                    apViewModel.start()
                 } else {
                     Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
                 }
             }
         )
-    }
-
-    private val refreshListener = object : SwipeRefreshLayout.OnRefreshListener {
-        override fun onRefresh() {
-            vm.refresh()
-        }
-    }
-
-    private val scrollUpCallback = object : SwipeRefreshLayout.OnChildScrollUpCallback {
-        override fun canChildScrollUp(parent: SwipeRefreshLayout, child: View): Boolean {
-            return binding.swipeRefresh.isRefreshing
-        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -92,31 +82,24 @@ class ApScanFragment : Fragment() {
         }
 
         binding.apScanRecycler.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = this@ApScanFragment.adapter
             setHasFixedSize(true)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                vm.items.collect { list ->
-                    adapter.submitList(list)
-                }
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                vm.scanning.collect { scanning ->
-                    binding.swipeRefresh.isRefreshing = scanning
-                }
+                launch { apViewModel.results.collect { adapter.submitList(it) } }
+                launch { viewModel.loading.collect { binding.swipeRefresh.isRefreshing = it } }
             }
         }
 
         val swipeRefreshLayout: SwipeRefreshLayout = binding.swipeRefresh
-        swipeRefreshLayout.setOnRefreshListener(refreshListener)
-        swipeRefreshLayout.setOnChildScrollUpCallback { _, _ ->
-            binding.swipeRefresh.isRefreshing
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.refresh()
+        }
+        swipeRefreshLayout.setOnChildScrollUpCallback { _, child ->
+            child?.canScrollVertically(-1) == true
         }
 
     }
@@ -132,7 +115,7 @@ class ApScanFragment : Fragment() {
     override fun onStop() {
         Log.v(TAG, "onStop()")
         super.onStop()
-        vm.stop()
+        apViewModel.stop()
     }
 
     override fun onDestroyView() {

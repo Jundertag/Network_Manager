@@ -11,8 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jayden.networkmanager.databinding.FragmentApDetailsBinding
-import com.jayden.networkmanager.features.datamodels.wifi.AccessPoint
+import com.jayden.networkmanager.features.domain.wifi.AccessPoint
 import com.jayden.networkmanager.features.presentation.apdetails.ApDetailsViewModel
 import com.jayden.networkmanager.features.presentation.main.ApViewModel
 import kotlinx.coroutines.launch
@@ -27,6 +28,8 @@ class ApDetailsFragment : Fragment() {
 
     private val apDetailsViewModel: ApDetailsViewModel by viewModels()
 
+    private lateinit var adapter: ButtonAdapter
+
     private var _binding: FragmentApDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -38,6 +41,10 @@ class ApDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.v(TAG, "onViewCreated($view: View, $savedInstanceState: Bundle?)")
+
+        adapter = ButtonAdapter {
+            Log.d(TAG, "onClick($it)")
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 apViewModel.selected.collect { ap ->
@@ -45,6 +52,24 @@ class ApDetailsFragment : Fragment() {
                 }
             }
         }
+
+        binding.buttonListRecycler.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = this@ApDetailsFragment.adapter
+        }
+    }
+
+    override fun onStart() {
+        Log.v(TAG, "onStart()")
+        super.onStart()
+        apViewModel.start()
+    }
+
+    override fun onStop() {
+        Log.v(TAG, "onStop()")
+        super.onStop()
+        apViewModel.stop()
     }
 
     private fun render(ap: AccessPoint?) {
