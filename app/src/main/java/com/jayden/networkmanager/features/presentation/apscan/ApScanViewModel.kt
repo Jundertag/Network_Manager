@@ -31,17 +31,6 @@ class ApScanViewModel(
     private val _results = MutableStateFlow<List<AccessPoint>>(emptyList())
     val results: StateFlow<List<AccessPoint>> = _results.asStateFlow()
 
-    fun refresh() {
-        Log.v(TAG, "refresh()")
-        _loading.value = androidWifiScanner.startScan()
-        viewModelScope.launch {
-            androidWifiScanner.scanResults.collectLatest {
-                _results.value = it
-                _loading.value = false
-            }
-        }
-    }
-
     companion object {
         private const val TAG = "ApScanViewModel"
         fun factory(context: Context): ViewModelProvider.Factory =

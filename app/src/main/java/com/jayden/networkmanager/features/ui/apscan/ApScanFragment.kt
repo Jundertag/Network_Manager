@@ -17,6 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jayden.networkmanager.databinding.FragmentApScanBinding
+import com.jayden.networkmanager.features.domain.wifi.AccessPoint
 import com.jayden.networkmanager.features.presentation.apscan.ApScanViewModel
 import com.jayden.networkmanager.features.presentation.main.ApViewModel
 import com.jayden.networkmanager.features.ui.apscan.ApAdapter
@@ -89,14 +90,28 @@ class ApScanFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { apViewModel.results.collect { adapter.submitList(it) } }
-                launch { viewModel.loading.collect { binding.swipeRefresh.isRefreshing = it } }
+                apViewModel.results.collect { list ->
+                    adapter.submitList(
+                    list.sortedWith(
+                        compareByDescending<AccessPoint> { it.rssi }
+                            .thenBy { it.bssid }
+                    )
+                ) }
             }
         }
 
         val swipeRefreshLayout: SwipeRefreshLayout = binding.swipeRefresh
         swipeRefreshLayout.setOnRefreshListener {
-            viewModel.refresh()
+            val refreshing = apViewModel.refresh()
+            if (!refreshing) {
+                binding.swipeRefresh.isRefreshing = false
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                apViewModel.loading.collect { binding.swipeRefresh.isRefreshing = it }
+            }
         }
         swipeRefreshLayout.setOnChildScrollUpCallback { _, child ->
             child?.canScrollVertically(-1) == true

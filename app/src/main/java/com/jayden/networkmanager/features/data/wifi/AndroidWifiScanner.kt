@@ -19,6 +19,8 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlin.apply
+import kotlin.math.PI
 
 class AndroidWifiScanner(appContext: Context) {
 
@@ -32,6 +34,13 @@ class AndroidWifiScanner(appContext: Context) {
     private val _scanResults = MutableSharedFlow<List<AccessPoint>>(replay = 1)
     val scanResults: Flow<List<AccessPoint>> = _scanResults
 
+    private val filter = IntentFilter().apply {
+        addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
+        addAction(WifiManager.RSSI_CHANGED_ACTION)
+    }
+
+    private var isRegistered = false
+
     fun startScan(): Boolean {
         Log.v(TAG, "startScan()")
         return wifiManager.startScan()
@@ -39,7 +48,14 @@ class AndroidWifiScanner(appContext: Context) {
 
     fun start() {
         Log.v(TAG, "start()")
-        context.registerReceiver(receiver, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
+        if (isRegistered) return
+        ContextCompat.registerReceiver(
+            context,
+            receiver,
+            filter,
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+        isRegistered = true
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             _scanResults.tryEmit(wifiManager.scanResults.map { it.toAp() })
@@ -48,15 +64,25 @@ class AndroidWifiScanner(appContext: Context) {
 
     fun stop() {
         Log.v(TAG, "stop()")
+        if (!isRegistered) return
         context.unregisterReceiver(receiver)
+        isRegistered = false
     }
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             Log.v(TAG, "onReceive($context: Context, $intent: Intent)")
 
-            if (intent.action == WifiManager.SCAN_RESULTS_AVAILABLE_ACTION && intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false)) {
+            if (intent.action == WifiManager.SCAN_RESULTS_AVAILABLE_ACTION) {
 
+                if (intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false)) {
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        _scanResults.tryEmit(wifiManager.scanResults.map { it.toAp() })
+                    }
+                }
+            }
+
+            if (intent.action == WifiManager.RSSI_CHANGED_ACTION) {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     _scanResults.tryEmit(wifiManager.scanResults.map { it.toAp() })
                 }

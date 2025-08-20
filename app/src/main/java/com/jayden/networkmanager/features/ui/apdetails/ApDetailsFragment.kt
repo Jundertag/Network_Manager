@@ -28,8 +28,6 @@ class ApDetailsFragment : Fragment() {
 
     private val apDetailsViewModel: ApDetailsViewModel by viewModels()
 
-    private lateinit var adapter: ButtonAdapter
-
     private var _binding: FragmentApDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -42,21 +40,12 @@ class ApDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.v(TAG, "onViewCreated($view: View, $savedInstanceState: Bundle?)")
 
-        adapter = ButtonAdapter {
-            Log.d(TAG, "onClick($it)")
-        }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 apViewModel.selected.collect { ap ->
                     ap?.let { render(it) }
                 }
             }
-        }
-
-        binding.buttonListRecycler.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = this@ApDetailsFragment.adapter
         }
     }
 
