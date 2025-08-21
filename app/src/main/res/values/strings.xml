@@ -10,4 +10,6 @@
     <string name="bssid_title">BSSID:</string>
     <string name="rssi_title">RSSI:</string>
     <string name="dialog_tips">Tip:</string>
+    <string name="ap_details_title">Details:</string>
+    <string name="information_elements_title">Information Elements:</string>
 </resources>
