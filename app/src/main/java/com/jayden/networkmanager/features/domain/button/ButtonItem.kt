@@ -1,6 +1,7 @@
 package com.jayden.networkmanager.features.domain.button
 
-data class Button(
-    val title: String,
+data class ButtonItem(
+    val iconRes: Int,
+    val text: String,
     val onClick: () -> Unit
 )

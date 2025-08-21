@@ -10,17 +10,11 @@ import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 import com.jayden.networkmanager.features.domain.wifi.AccessPoint
-import com.jayden.networkmanager.features.presentation.apscan.ApScanViewModel
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.apply
-import kotlin.math.PI
 
 class AndroidWifiScanner(appContext: Context) {
 
@@ -31,7 +25,7 @@ class AndroidWifiScanner(appContext: Context) {
     private val context = appContext.applicationContext
     private val wifiManager = context.getSystemService(WifiManager::class.java)
 
-    private val _scanResults = MutableSharedFlow<List<AccessPoint>>(replay = 1)
+    private val _scanResults = MutableStateFlow<List<AccessPoint>>(emptyList())
     val scanResults: Flow<List<AccessPoint>> = _scanResults
 
     private val filter = IntentFilter().apply {
@@ -102,7 +96,7 @@ class AndroidWifiScanner(appContext: Context) {
         } else {
             @Suppress("DEPRECATION")
             AccessPoint(
-                ssid = SSID.ifBlank { "<Hidden SSID>" },
+                ssid = SSID.ifBlank { "<Hidden SSID>" } ?: "<Hidden SSID>",
                 bssid = BSSID ?: "",
                 rssi = level,
                 capabilities = capabilities
