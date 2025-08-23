@@ -2,9 +2,10 @@
 <resources>
     <dimen name="square_size">120dp</dimen>
 
-    <dimen name="row_h_padding">16dp</dimen>
-    <dimen name="row_v_padding">12dp</dimen>
+    <dimen name="row_h_padding">6dp</dimen>
+    <dimen name="row_v_padding">6dp</dimen>
     <dimen name="row_icon_size">24dp</dimen>
     <dimen name="row_icon_margin">16dp</dimen>
     <dimen name="row_spacing">8dp</dimen>
+    <dimen name="row_text_size">12sp</dimen>
 </resources>
