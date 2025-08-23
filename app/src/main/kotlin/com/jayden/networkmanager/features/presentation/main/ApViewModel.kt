@@ -32,6 +32,8 @@ class ApViewModel(
     private val _results = MutableStateFlow<List<AccessPoint>>(emptyList())
     val results: StateFlow<List<AccessPoint>> = _results.asStateFlow()
 
+
+
     fun start() {
         Log.v(TAG, "start()")
         if (started) return

@@ -2,6 +2,8 @@
     <string name="app_name">Network Manager</string>
     <string name="menu_wifi">Access Points</string>
     <string name="menu_wifi_details">AP Details</string>
+    <string name="button_ap_connect">Connect</string>
+    <string name="button_ap_disconnect">Disconnect</string>
     <string name="button_ap_refresh">Refresh</string>
     <string name="ap_row_ssid"><![CDATA[<Hidden SSID>]]></string>
     <string name="ap_image_refresh_description">This is a Refresh Icon</string>

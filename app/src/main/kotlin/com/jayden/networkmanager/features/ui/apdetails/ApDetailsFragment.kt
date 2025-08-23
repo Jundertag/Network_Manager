@@ -21,7 +21,6 @@ import com.jayden.networkmanager.databinding.FragmentApDetailsBinding
 import com.jayden.networkmanager.features.domain.wifi.AccessPoint
 import com.jayden.networkmanager.features.presentation.apdetails.ApDetailsViewModel
 import com.jayden.networkmanager.features.presentation.main.ApViewModel
-import com.jayden.networkmanager.features.ui.apdetails.ActionButtons
 import kotlinx.coroutines.launch
 
 class ApDetailsFragment : Fragment() {
