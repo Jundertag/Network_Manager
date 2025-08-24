@@ -179,4 +179,6 @@ class MainActivity : AppCompatActivity() {
         Log.v(TAG, "showApDetails()")
         showDetailFragment(TAG_DETAILS)
     }
+
+    fun showCurrentNetwork() {}
 }

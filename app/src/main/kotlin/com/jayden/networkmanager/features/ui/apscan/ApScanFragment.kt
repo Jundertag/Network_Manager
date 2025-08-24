@@ -82,6 +82,10 @@ class ApScanFragment : Fragment() {
             (requireActivity() as? MainActivity)?.showApDetails()
         }
 
+        binding.currentButton.setOnClickListener {
+            (requireActivity() as? MainActivity)?.showCurrentNetwork()
+        }
+
         binding.apScanRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = this@ApScanFragment.adapter

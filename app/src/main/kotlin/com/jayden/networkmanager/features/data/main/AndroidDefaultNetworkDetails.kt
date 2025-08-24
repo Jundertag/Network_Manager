@@ -6,6 +6,8 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.wifi.WifiInfo
 import android.util.Log
+import com.jayden.networkmanager.features.domain.wifi.AccessPoint
+import com.jayden.networkmanager.features.domain.wifi.CurrentAccessPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -21,7 +23,7 @@ class AndroidDefaultNetworkDetails(appContext: Context) {
 
     private var isRegistered = false
 
-    private val _currentWifi = MutableStateFlow<WifiInfo?>(null)
+    private val _currentWifi = MutableStateFlow<CurrentAccessPoint?>(null)
     val currentWifi = _currentWifi.asStateFlow()
 
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
@@ -33,7 +35,7 @@ class AndroidDefaultNetworkDetails(appContext: Context) {
 
             when (transportInfo) {
                 is WifiInfo -> {
-                    _currentWifi.value = transportInfo
+                    _currentWifi.value = transportInfo.toAp()
                 }
                 else -> {
                     _currentWifi.value = null
@@ -54,5 +56,13 @@ class AndroidDefaultNetworkDetails(appContext: Context) {
         if (!isRegistered) return
         connectivityManager.unregisterNetworkCallback(networkCallback)
         isRegistered = false
+    }
+
+    private fun WifiInfo.toAp(): CurrentAccessPoint {
+        return CurrentAccessPoint(
+            ssid = ssid?.removeSurrounding("\"")?.ifBlank { "<Hidden SSID>" } ?: "<Hidden SSID>",
+            bssid = bssid ?: "",
+            rssi = rssi
+        )
     }
 }
