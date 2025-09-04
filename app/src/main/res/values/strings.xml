@@ -15,4 +15,7 @@
     <string name="ap_details_title">Details:</string>
     <string name="information_elements_title">Information Elements:</string>
     <string name="current_button_description">This button goes to a screen to display your current network connection</string>
+    <string name="menu_current">Current Network</string>
+    <string name="current_network_title">Current Networks</string>
+    <string name="wifi_title">WiFi</string>
 </resources>

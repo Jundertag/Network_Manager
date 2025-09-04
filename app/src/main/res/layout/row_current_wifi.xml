@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +10,7 @@
         android:layout_height="wrap_content"
         app:cardBackgroundColor="?attr/colorPrimaryVariant"
         app:cardCornerRadius="12dp"
-        app:cardElevation="2dp"
+        app:cardElevation="4dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -33,7 +32,7 @@
                 android:textStyle="bold"
                 android:textSize="22sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/bssidText"
@@ -43,7 +42,7 @@
                 android:layout_marginStart="8dp"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ssidText"/>
+                app:layout_constraintTop_toBottomOf="@+id/ssidText" />
 
             <TextView
                 android:id="@+id/capabilitiesText"
@@ -54,7 +53,7 @@
                 android:layout_marginTop="4dp"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/bssidText"/>
+                app:layout_constraintTop_toBottomOf="@id/bssidText" />
 
             <TextView
                 android:id="@+id/rssiText"
@@ -64,7 +63,7 @@
                 android:layout_marginEnd="8dp"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ssidText"/>
+                app:layout_constraintTop_toBottomOf="@id/ssidText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

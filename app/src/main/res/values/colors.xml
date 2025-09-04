@@ -9,11 +9,11 @@
     <color name="white">#D7D7D7</color>
 
     <color name="item_dark">#20252E</color>
-    <color name="item_light">#8BA2B4</color>
+    <color name="item_light">#71A9DE</color>
 
     <color name="item_dark_selectable">#2D3543</color>
-    <color name="item_light_selectable">#A2C8E9</color>
+    <color name="item_light_selectable">#FAFDFF</color>
 
     <color name="background_dark">#161A21</color>
-    <color name="background_light">#F7FCFF</color>
+    <color name="background_light">#E9E9E9</color>
 </resources>

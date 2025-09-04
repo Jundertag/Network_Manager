@@ -6,8 +6,7 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.wifi.WifiInfo
 import android.util.Log
-import com.jayden.networkmanager.features.domain.wifi.AccessPoint
-import com.jayden.networkmanager.features.domain.wifi.CurrentAccessPoint
+import com.jayden.networkmanager.features.domain.wifi.CurrentWifiPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -23,10 +22,10 @@ class AndroidDefaultNetworkDetails(appContext: Context) {
 
     private var isRegistered = false
 
-    private val _currentWifi = MutableStateFlow<CurrentAccessPoint?>(null)
+    private val _currentWifi = MutableStateFlow<CurrentWifiPoint?>(null)
     val currentWifi = _currentWifi.asStateFlow()
 
-    private val networkCallback = object : ConnectivityManager.NetworkCallback() {
+    private val defaultNetworkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onCapabilitiesChanged(
             network: Network,
             networkCapabilities: NetworkCapabilities
@@ -47,19 +46,19 @@ class AndroidDefaultNetworkDetails(appContext: Context) {
     fun start() {
         Log.v(TAG, "start()")
         if (isRegistered) return
-        connectivityManager.registerDefaultNetworkCallback(networkCallback)
+        connectivityManager.registerDefaultNetworkCallback(defaultNetworkCallback)
         isRegistered = true
     }
 
     fun stop() {
         Log.v(TAG, "stop()")
         if (!isRegistered) return
-        connectivityManager.unregisterNetworkCallback(networkCallback)
+        connectivityManager.unregisterNetworkCallback(defaultNetworkCallback)
         isRegistered = false
     }
 
-    private fun WifiInfo.toAp(): CurrentAccessPoint {
-        return CurrentAccessPoint(
+    private fun WifiInfo.toAp(): CurrentWifiPoint {
+        return CurrentWifiPoint(
             ssid = ssid?.removeSurrounding("\"")?.ifBlank { "<Hidden SSID>" } ?: "<Hidden SSID>",
             bssid = bssid ?: "",
             rssi = rssi

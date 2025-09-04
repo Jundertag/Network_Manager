@@ -21,8 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?attr/colorPrimaryVariant"
-        app:itemTextColor="?attr/colorOnSecondary"
-        app:itemIconTint="?attr/colorOnSecondary"
+        app:itemTextColor="?attr/colorSecondary"
+        app:itemIconTint="?attr/colorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/nav_bottom"/>
 

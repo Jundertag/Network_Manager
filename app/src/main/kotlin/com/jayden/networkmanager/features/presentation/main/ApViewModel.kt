@@ -8,12 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.jayden.networkmanager.features.data.main.AndroidDefaultNetworkDetails
 import com.jayden.networkmanager.features.data.wifi.AndroidWifiScanner
 import com.jayden.networkmanager.features.domain.wifi.AccessPoint
-import com.jayden.networkmanager.features.domain.wifi.CurrentAccessPoint
+import com.jayden.networkmanager.features.domain.wifi.CurrentWifiPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 class ApViewModel(
@@ -37,7 +36,7 @@ class ApViewModel(
     val results: StateFlow<List<AccessPoint>> = _results.asStateFlow()
 
     private var defaultNetworkJob: Job? = null
-    private val _defaultNetworkDetails = MutableStateFlow<CurrentAccessPoint?>(null)
+    private val _defaultNetworkDetails = MutableStateFlow<CurrentWifiPoint?>(null)
     val defaultNetworkDetails = _defaultNetworkDetails.asStateFlow()
 
 

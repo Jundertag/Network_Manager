@@ -8,16 +8,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
+import androidx.fragment.app.commitNow
 import com.jayden.networkmanager.R
 import com.jayden.networkmanager.databinding.ActivityMainBinding
 import com.jayden.networkmanager.features.ui.apdetails.ApDetailsFragment
 import com.jayden.networkmanager.features.ui.apscan.ApScanFragment
+import com.jayden.networkmanager.features.ui.currentnetwork.CurrentNetworkFragment
 
 class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG_SCAN = "frag_scan"
         private const val TAG_DETAILS = "frag_details"
+        private const val TAG_CURRENT = "frag_current"
+
         private const val BACK_STACK_DETAILS = "details_stack"
 
         private const val TAG = "MainActivity"
@@ -56,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.v(TAG, "onCreate($savedInstanceState)")
+        Log.v(TAG, "onCreate($savedInstanceState: Bundle?)")
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
@@ -64,6 +68,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             addFragment(ApScanFragment(), TAG_SCAN)
+            addFragment(CurrentNetworkFragment(), TAG_CURRENT)
             binding.fragmentDetailsContainer.visibility = View.GONE
         } else {
             activeTag = savedInstanceState.getString("activeTag", TAG_SCAN)
@@ -81,7 +86,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNav.setOnItemSelectedListener { item ->
             val targetTag = when (item.itemId) {
-                R.id.menu_ap_scan    -> TAG_SCAN
+                R.id.menu_ap_scan -> TAG_SCAN
+                R.id.menu_current -> TAG_CURRENT
                 else -> return@setOnItemSelectedListener false
             }
             if (targetTag == activeTag) return@setOnItemSelectedListener true
@@ -109,7 +115,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun addFragment(fragment: Fragment, tag: String) {
         Log.d(TAG, "addFragment($fragment: Fragment, $tag: String)")
-        supportFragmentManager.commit {
+        supportFragmentManager.commitNow {
             setReorderingAllowed(true)
             add(R.id.fragment_container, fragment, tag)
         }
@@ -119,7 +125,7 @@ class MainActivity : AppCompatActivity() {
     private fun showFragment(tag: String) {
         Log.d(TAG, "showFragment($tag: String)")
         val activeFragment = supportFragmentManager.findFragmentByTag(activeTag)
-        val targetFragment = supportFragmentManager.findFragmentByTag(tag) ?: throw IllegalStateException("Tag cannot be null")
+        val targetFragment = supportFragmentManager.findFragmentByTag(tag) ?: throw IllegalStateException("This tag $tag is not assosicated with a fragment")
 
         if (targetFragment.isVisible) return
         supportFragmentManager.commit {
