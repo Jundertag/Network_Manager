@@ -16,6 +16,7 @@
         android:textStyle="bold"
         android:textSize="@dimen/title_text_size"
         android:text="@string/ap_scan_title"
+        android:fontFamily="@font/nunito"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

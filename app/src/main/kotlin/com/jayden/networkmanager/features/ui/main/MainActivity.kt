@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     private val backStackListener = OnBackStackChangedListener()
 
+    private var detailsShown = false
 
     inner class OnBackStackChangedListener : FragmentManager.OnBackStackChangedListener {
         override fun onBackStackChanged() {
@@ -51,11 +52,16 @@ class MainActivity : AppCompatActivity() {
 
         override fun onBackStackChangeCommitted(fragment: Fragment, pop: Boolean) {
             Log.v(TAG, "onBackStackChangeCommitted($fragment: Fragment, $pop: Boolean)")
-            if (pop) {
-                unblockTouch()
-            } else if (supportFragmentManager.backStackEntryCount > 0) {
+
+            val detailsFrag = supportFragmentManager.findFragmentByTag(TAG_DETAILS)
+
+            if (detailsFrag != null && detailsFrag.isAdded) {
                 blockTouch()
+            } else {
+                unblockTouch()
             }
+
+            detailsShown = supportFragmentManager.findFragmentByTag(TAG_DETAILS)?.isVisible != true
         }
     }
 
@@ -67,22 +73,15 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.addOnBackStackChangedListener(backStackListener)
 
         if (savedInstanceState == null) {
-            addFragment(ApScanFragment(), TAG_SCAN)
-            addFragment(CurrentNetworkFragment(), TAG_CURRENT)
-            binding.fragmentDetailsContainer.visibility = View.GONE
-        } else {
-            activeTag = savedInstanceState.getString("activeTag", TAG_SCAN)
-            val detailsFrag = supportFragmentManager.findFragmentByTag(TAG_DETAILS)
-            if (detailsFrag != null && detailsFrag.isVisible && supportFragmentManager.findFragmentById(
-                    R.id.fragment_details_container
-                ) == detailsFrag
-            ) {
-                binding.fragmentDetailsContainer.visibility = View.VISIBLE
-            } else {
-                binding.fragmentDetailsContainer.visibility = View.GONE
+            supportFragmentManager.commitNow {
+                setReorderingAllowed(true)
+                add(R.id.fragment_container, ApScanFragment(), TAG_SCAN)
+                add(R.id.fragment_container, CurrentNetworkFragment(), TAG_CURRENT)
             }
+            hideFragment(TAG_CURRENT)
+            activeTag = TAG_SCAN
+            binding.fragmentDetailsContainer.visibility = View.GONE
         }
-
 
         binding.bottomNav.setOnItemSelectedListener { item ->
             val targetTag = when (item.itemId) {
@@ -113,28 +112,26 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.removeOnBackStackChangedListener(backStackListener)
     }
 
-    private fun addFragment(fragment: Fragment, tag: String) {
-        Log.d(TAG, "addFragment($fragment: Fragment, $tag: String)")
-        supportFragmentManager.commitNow {
-            setReorderingAllowed(true)
-            add(R.id.fragment_container, fragment, tag)
-        }
-        activeTag = tag
-    }
-
     private fun showFragment(tag: String) {
         Log.d(TAG, "showFragment($tag: String)")
         val activeFragment = supportFragmentManager.findFragmentByTag(activeTag)
         val targetFragment = supportFragmentManager.findFragmentByTag(tag) ?: throw IllegalStateException("This tag $tag is not assosicated with a fragment")
 
         if (targetFragment.isVisible) return
-        supportFragmentManager.commit {
+        supportFragmentManager.commitNow {
             setReorderingAllowed(true)
             if (activeFragment != null && activeFragment != targetFragment) {
                 hide(activeFragment)
-                addToBackStack(activeTag)
             }
             show(targetFragment)
+
+            if (supportFragmentManager.findFragmentByTag(TAG_DETAILS)?.isAdded == true) {
+                if (targetFragment != supportFragmentManager.findFragmentByTag(TAG_SCAN)) {
+                    hideFragment(TAG_DETAILS)
+                } else if (targetFragment == supportFragmentManager.findFragmentByTag(TAG_SCAN) && detailsShown) {
+                    showDetailFragment(TAG_DETAILS)
+                }
+            }
         }
         activeTag = tag
     }
@@ -153,16 +150,27 @@ class MainActivity : AppCompatActivity() {
     private fun showDetailFragment(tag: String) {
         Log.d(TAG, "showDetailFragment($tag: String)")
 
-        if (supportFragmentManager.findFragmentByTag(tag)?.isAdded == true) return
+        if (supportFragmentManager.findFragmentByTag(tag)?.isVisible == true) return
 
         binding.fragmentDetailsContainer.visibility = View.VISIBLE
 
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            setDefaultAnimations()
-            add(R.id.fragment_details_container, ApDetailsFragment(), tag)
-            addToBackStack(BACK_STACK_DETAILS)
+        if (supportFragmentManager.findFragmentByTag(tag)?.isAdded != true) {
+            if (!detailsShown) return
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                setDefaultAnimations()
+                add(R.id.fragment_details_container, ApDetailsFragment(), tag)
+                addToBackStack(BACK_STACK_DETAILS)
+            }
+        } else if (supportFragmentManager.findFragmentByTag(tag)?.isAdded == true) {
+            if (!detailsShown) return
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                show(supportFragmentManager.findFragmentByTag(tag) ?: throw IllegalStateException("This tag $tag is not assosicated with a fragment"))
+            }
         }
+        detailsShown = true
+        blockTouch()
     }
 
     private fun blockTouch() {
@@ -183,6 +191,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showApDetails() {
         Log.v(TAG, "showApDetails()")
+        detailsShown = true
         showDetailFragment(TAG_DETAILS)
     }
 

@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.jayden.networkmanager.features.data.main.AndroidDefaultNetworkDetails
 import com.jayden.networkmanager.features.data.wifi.AndroidWifiScanner
 import com.jayden.networkmanager.features.domain.wifi.AccessPoint
-import com.jayden.networkmanager.features.domain.wifi.CurrentWifiPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,10 +34,6 @@ class ApViewModel(
     private val _results = MutableStateFlow<List<AccessPoint>>(emptyList())
     val results: StateFlow<List<AccessPoint>> = _results.asStateFlow()
 
-    private var defaultNetworkJob: Job? = null
-    private val _defaultNetworkDetails = MutableStateFlow<CurrentWifiPoint?>(null)
-    val defaultNetworkDetails = _defaultNetworkDetails.asStateFlow()
-
 
     fun start() {
         Log.v(TAG, "start()")
@@ -53,19 +48,12 @@ class ApViewModel(
                 _loading.value = false
             }
         }
-
-        defaultNetworkJob = viewModelScope.launch {
-            androidDefaultNetworkDetails.currentWifi.collect {
-                _defaultNetworkDetails.value = it
-            }
-        }
     }
 
     fun stop() {
         Log.v(TAG, "stop()")
         if (!started) return
         wifiScanJob?.cancel()
-        defaultNetworkJob?.cancel()
         androidWifiScanner.stop()
         androidDefaultNetworkDetails.stop()
         started = false
@@ -73,9 +61,8 @@ class ApViewModel(
     }
 
     fun refresh(): Boolean {
-        Log.v(TAG, "refresh()")
-
         val refreshing = androidWifiScanner.startScan()
+        Log.d(TAG, "refresh(): $refreshing")
 
         _loading.value = refreshing
         return refreshing

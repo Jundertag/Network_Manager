@@ -56,7 +56,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:text="@string/ap_details_title"
                 android:textStyle="bold"
-                android:textSize="22sp"/>
+                android:textSize="22sp"
+                android:fontFamily="@font/nunito"/>
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -76,14 +77,16 @@
                         android:layout_height="wrap_content"
                         android:text="@string/bssid_title"
                         android:textSize="16sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:fontFamily="@font/nunito"/>
 
                     <TextView
                         android:id="@+id/bssid_data"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="" />
+                        android:text=""
+                        android:fontFamily="@font/nunito"/>
                 </TableRow>
 
                 <TableRow
@@ -96,14 +99,16 @@
                         android:layout_height="wrap_content"
                         android:text="@string/rssi_title"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:fontFamily="@font/nunito"/>
 
                     <TextView
                         android:id="@+id/rssi_data"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="" />
+                        android:text=""
+                        android:fontFamily="@font/nunito"/>
                 </TableRow>
 
             </TableLayout>
@@ -136,7 +141,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:text="@string/information_elements_title"
                 android:textStyle="bold"
-                android:textSize="22sp"/>
+                android:textSize="22sp"
+                android:fontFamily="@font/nunito"/>
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -151,14 +157,16 @@
                         android:layout_height="wrap_content"
                         android:text="ddd:"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:fontFamily="@font/nunito"/>
 
                     <TextView
                         android:layout_margin="4dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:fontFamily="@font/nunito"/>
                 </TableRow>
 
             </TableLayout>

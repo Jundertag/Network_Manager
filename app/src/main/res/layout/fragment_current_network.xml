@@ -17,6 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/current_network_title"
         android:textStyle="bold"
+        android:fontFamily="@font/nunito"
         android:textSize="@dimen/title_text_size"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

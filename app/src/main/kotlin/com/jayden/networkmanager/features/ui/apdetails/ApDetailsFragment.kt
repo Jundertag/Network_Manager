@@ -57,13 +57,11 @@ class ApDetailsFragment : Fragment() {
     override fun onStart() {
         Log.v(TAG, "onStart()")
         super.onStart()
-        apViewModel.start()
     }
 
     override fun onStop() {
         Log.v(TAG, "onStop()")
         super.onStop()
-        apViewModel.stop()
     }
 
     private fun render(ap: AccessPoint?) {

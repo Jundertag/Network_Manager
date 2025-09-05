@@ -21,8 +21,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?attr/colorPrimaryVariant"
-        app:itemTextColor="?attr/colorSecondary"
-        app:itemIconTint="?attr/colorSecondary"
+        app:itemIconTint="?attr/colorOnSecondary"
+        app:itemTextAppearanceInactive="@font/nunito_regular"
+        app:itemTextAppearanceActive="@font/nunito_bold"
+        app:itemTextColor="?attr/colorOnSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/nav_bottom"/>
 
