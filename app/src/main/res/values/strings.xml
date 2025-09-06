@@ -2,5 +2,6 @@
     <string name="app_name">Network Manager</string>
 
     <string name="menu_ap_scan">Wifi Points</string>
+    <string name="menu_ap_aware_scan">Wifi Aware Points</string>
 
 </resources>

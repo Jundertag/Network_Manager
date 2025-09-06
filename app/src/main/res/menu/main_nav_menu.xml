@@ -5,4 +5,8 @@
         android:title="@string/menu_ap_scan"
         android:icon="@drawable/ic_wifi"/>
 
+    <item android:id="@+id/menu_ap_aware_scan"
+        android:title="@string/menu_ap_aware_scan"
+        android:icon="@drawable/ic_wifi_mobile"/>
+
 </menu>
