@@ -1,21 +1,6 @@
 <resources>
     <string name="app_name">Network Manager</string>
-    <string name="menu_wifi">Access Points</string>
-    <string name="menu_wifi_details">AP Details</string>
-    <string name="button_ap_connect">Connect</string>
-    <string name="button_ap_disconnect">Disconnect</string>
-    <string name="button_ap_refresh">Refresh</string>
-    <string name="ap_row_ssid"><![CDATA[<Hidden SSID>]]></string>
-    <string name="ap_image_refresh_description">This is a Refresh Icon</string>
-    <string name="ap_scan_title">Access Points</string>
-    <string name="wifi_icon_description">This is a wifi icon that adapts to received signal strength</string>
-    <string name="bssid_title">BSSID:</string>
-    <string name="rssi_title">RSSI:</string>
-    <string name="dialog_tips">Tip:</string>
-    <string name="ap_details_title">Details:</string>
-    <string name="information_elements_title">Information Elements:</string>
-    <string name="current_button_description">This button goes to a screen to display your current network connection</string>
-    <string name="menu_current">Current Network</string>
-    <string name="current_network_title">Current Networks</string>
-    <string name="wifi_title">WiFi</string>
+
+    <string name="menu_ap_scan">Wifi Points</string>
+
 </resources>
