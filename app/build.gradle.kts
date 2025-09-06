@@ -41,6 +41,12 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    packaging {
+        resources {
+            pickFirsts += "META-INF/gradle/incremental.annotation.processors"
+        }
+    }
 }
 
 kotlin {

@@ -19,4 +19,9 @@ class ApAwareScanFragment : Fragment(R.layout.fragment_aware_scan) {
 
         // future usages of binding
     }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }
