@@ -1,9 +1,7 @@
 package com.jayden.networkmanager.ui.apscan
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.jayden.networkmanager.R
 import com.jayden.networkmanager.databinding.FragmentScanBinding
