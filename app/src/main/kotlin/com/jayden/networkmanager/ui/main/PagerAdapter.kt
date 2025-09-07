@@ -13,7 +13,7 @@ class PagerAdapter @Inject constructor(
     activity: FragmentActivity
 ) : FragmentStateAdapter(activity) {
 
-    private val pages: List<Page> = listOf(Page.Scan)
+    private val pages: List<Page> = listOf(Page.Scan, Page.AwareScan)
 
     override fun getItemCount(): Int {
         return pages.size
@@ -26,4 +26,10 @@ class PagerAdapter @Inject constructor(
 
     override fun getItemId(position: Int): Long = pages[position].id
     override fun containsItem(itemId: Long): Boolean = pages.any { it.id == itemId }
+
+    fun getItemIdFromNav(navId: Int): Long = pages.first { it.navId == navId }.id
+
+    fun getItemPos(navId: Int): Int = pages.indexOfFirst { it.navId == navId }
+
+    fun getItemNavId(position: Int): Int = pages[position].navId
 }

@@ -1,6 +1,7 @@
 package com.jayden.networkmanager.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.jayden.networkmanager.R
@@ -14,10 +15,26 @@ class MainActivity : AppCompatActivity(
 ) {
     @Inject lateinit var pagerAdapter: PagerAdapter
 
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-            binding.navBar.selectedItemId = pagerAdapter.getItemId(position).toInt()
+        override fun onPageScrollStateChanged(state: Int) {
+            when (state) {
+                ViewPager2.SCROLL_STATE_IDLE -> {
+                    binding.navBar.selectedItemId =
+                        pagerAdapter.getItemNavId(binding.viewPager.currentItem)
+                }
+
+                ViewPager2.SCROLL_STATE_DRAGGING -> {
+
+                }
+
+                ViewPager2.SCROLL_STATE_SETTLING -> {
+
+                }
+            }
         }
     }
 
@@ -28,7 +45,8 @@ class MainActivity : AppCompatActivity(
         setContentView(binding.root)
 
         binding.navBar.setOnItemSelectedListener {
-            binding.viewPager.currentItem = it.itemId
+            Log.v(TAG, "NavigationBarView.OnItemSelectedListener: ${it.itemId}")
+            binding.viewPager.currentItem = pagerAdapter.getItemPos(it.itemId)
             true
         }
 

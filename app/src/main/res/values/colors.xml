@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue_200">#86A0FC</color>
-    <color name="blue_500">#0047EE</color>
-    <color name="blue_700">#0000B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#212121</color>
-    <color name="white">#D7D7D7</color>
+    <color name="item_dark">#272C33</color>
+    <color name="item_light">#FFFFFF</color>
 
-    <color name="item_dark">#20252E</color>
-    <color name="item_light">#6B9DF0</color>
+    <color name="item_dark_selectable">#405475</color>
+    <color name="item_light_selectable">#6B97F0</color>
 
-    <color name="item_dark_selectable">#2D3543</color>
-    <color name="item_light_selectable">#FAFDFF</color>
+    <color name="background_dark">#0D0F12</color>
+    <color name="background_dark_secondary">#6A88BC</color>
 
-    <color name="background_dark">#161A21</color>
-    <color name="background_light">#E9E9E9</color>
+    <color name="background_light">#F2F2F2</color>
+    <color name="background_light_secondary">#7E7E7E</color>
 </resources>

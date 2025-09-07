@@ -15,7 +15,7 @@
         android:required="false" />
 
     <application
-        android:name=".ui.App"
+        android:name="com.jayden.networkmanager.ui.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WiFiManager">
         <activity android:name="com.jayden.networkmanager.ui.main.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,6 +34,13 @@
             </intent-filter>
 
         </activity>
-    </application>
 
+        <activity android:name="com.jayden.networkmanager.ui.settings.SettingsActivity"
+            android:exported="true"
+            android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>
