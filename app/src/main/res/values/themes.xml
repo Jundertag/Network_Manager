@@ -1,16 +1,27 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.WiFiManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/background_light</item>
-        <item name="colorPrimaryVariant">@color/item_light_selectable</item>
-        <item name="colorOnPrimary">@color/item_light</item>
+        <item name="colorPrimary">@color/item_primary_light</item>
+        <item name="colorPrimaryVariant">@color/item_primary_variant_light</item>
+        <item name="colorOnPrimary">@color/item_on_primary_light</item>
+
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/background_light_secondary</item>
-        <item name="colorSecondaryVariant">@color/item_dark_selectable</item>
-        <item name="colorOnSecondary">@color/item_dark</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="colorSecondary">@color/item_secondary_light</item>
+        <item name="colorOnSecondary">@color/item_on_secondary_light</item>
+
+        <!-- Background color. -->
+        <item name="android:colorBackground">@color/background_light</item>
+
+        <!-- Surface color. -->
+        <item name="colorSurface">@color/surface_light</item>
+        <item name="colorOnSurface">@color/on_surface_light</item>
+
+        <!-- System bar colors. -->
+        <item name="android:statusBarColor">?attr/colorOnSurface</item>
+        <item name="android:navigationBarColor">?attr/colorOnSurface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 </resources>

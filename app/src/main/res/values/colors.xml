@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="item_dark">#272C33</color>
-    <color name="item_light">#FFFFFF</color>
+    <color name="surface_dark">#353D4B</color>
+    <color name="surface_light">#FFFFFF</color>
 
-    <color name="item_dark_selectable">#405475</color>
-    <color name="item_light_selectable">#6B97F0</color>
+    <color name="on_surface_dark">#E0E0E0</color>
+    <color name="on_surface_light">#6A6A6A</color>
 
-    <color name="background_dark">#0D0F12</color>
-    <color name="background_dark_secondary">#6A88BC</color>
-
+    <color name="background_dark">#111418</color>
     <color name="background_light">#F2F2F2</color>
-    <color name="background_light_secondary">#7E7E7E</color>
+
+    <color name="item_primary_dark">#181F28</color>
+    <color name="item_primary_light">#E9E9E9</color>
+
+    <color name="item_primary_variant_dark">#1E2433</color>
+    <color name="item_primary_variant_light">#FAFAFA</color>
+
+    <color name="item_on_primary_dark">#9FAFC1</color>
+    <color name="item_on_primary_light">#646D75</color>
+
+    <color name="item_secondary_dark">#29323E</color>
+    <color name="item_secondary_light">#8BB1D3</color>
+
+    <color name="item_on_secondary_dark">#1E7CD3</color>
+    <color name="item_on_secondary_light">#1B90F0</color>
 </resources>
