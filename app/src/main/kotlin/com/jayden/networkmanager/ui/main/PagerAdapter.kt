@@ -5,23 +5,22 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.jayden.networkmanager.ui.apawarescan.ApAwareScanFragment
 import com.jayden.networkmanager.ui.apscan.ApScanFragment
-import dagger.hilt.android.scopes.ActivityScoped
-import jakarta.inject.Inject
+import com.jayden.networkmanager.ui.connections.ConnectionsFragment
 
-@ActivityScoped
-class PagerAdapter @Inject constructor(
+class PagerAdapter(
     activity: FragmentActivity
 ) : FragmentStateAdapter(activity) {
 
-    private val pages: List<Page> = listOf(Page.Scan, Page.AwareScan)
+    private val pages: List<Page> = listOf(Page.Connections, Page.WifiScan, Page.WifiAwareScan)
 
     override fun getItemCount(): Int {
         return pages.size
     }
 
     override fun createFragment(position: Int): Fragment = when (pages[position]) {
-        is Page.Scan -> ApScanFragment()
-        is Page.AwareScan -> ApAwareScanFragment()
+        is Page.Connections -> ConnectionsFragment()
+        is Page.WifiScan -> ApScanFragment()
+        is Page.WifiAwareScan -> ApAwareScanFragment()
     }
 
     override fun getItemId(position: Int): Long = pages[position].id

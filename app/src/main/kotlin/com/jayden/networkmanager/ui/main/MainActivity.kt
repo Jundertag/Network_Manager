@@ -2,19 +2,21 @@ package com.jayden.networkmanager.ui.main
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.jayden.networkmanager.R
 import com.jayden.networkmanager.databinding.ActivityMainBinding
+import com.jayden.networkmanager.presentation.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import jakarta.inject.Inject
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity(
     R.layout.activity_main
 ) {
-    @Inject lateinit var pagerAdapter: PagerAdapter
+    private val pagerAdapter = PagerAdapter(this)
 
+    private val viewModel: MainViewModel by viewModels()
     companion object {
         private const val TAG = "MainActivity"
     }
