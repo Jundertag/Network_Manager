@@ -11,7 +11,7 @@ class PagerAdapter(
     activity: FragmentActivity
 ) : FragmentStateAdapter(activity) {
 
-    private val pages: List<Page> = listOf(Page.Connections, Page.WifiScan, Page.WifiAwareScan)
+    private val pages: List<Page> = listOf(Page.Connections, Page.WifiScan)
 
     override fun getItemCount(): Int {
         return pages.size
@@ -20,7 +20,6 @@ class PagerAdapter(
     override fun createFragment(position: Int): Fragment = when (pages[position]) {
         is Page.Connections -> ConnectionsFragment()
         is Page.WifiScan -> ApScanFragment()
-        is Page.WifiAwareScan -> ApAwareScanFragment()
     }
 
     override fun getItemId(position: Int): Long = pages[position].id

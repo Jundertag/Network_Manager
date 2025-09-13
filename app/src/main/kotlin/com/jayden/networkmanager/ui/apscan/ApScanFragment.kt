@@ -11,13 +11,12 @@ class ApScanFragment : Fragment(R.layout.fragment_scan) {
     private var _binding: FragmentScanBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentScanBinding.bind(view)
 
-        // future usages of binding
-        // binding.scanlist.adapter = ...
+        binding.toolbar.inflateMenu(R.menu.menu_scan)
+
     }
 
     override fun onDestroyView() {

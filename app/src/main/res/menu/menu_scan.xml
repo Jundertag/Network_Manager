@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_wifi_scan"
+        android:title="@string/menu_ap_scan"/>
+
+    <item
+        android:id="@+id/menu_wifi_aware_scan"
+        android:title="@string/menu_ap_aware_scan"/>
+
+    <item
+        android:id="@+id/menu_wifi_direct_scan"
+        android:title="@string/menu_ap_direct_scan"/>
+
+</menu>

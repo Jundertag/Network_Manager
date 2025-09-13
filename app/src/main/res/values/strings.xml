@@ -2,7 +2,10 @@
     <string name="app_name">Network Manager</string>
 
     <string name="menu_connections">Connections</string>
-    <string name="menu_ap_scan">Wifi Points</string>
-    <string name="menu_ap_aware_scan">Wifi Aware Points</string>
+
+    <string name="menu_wifi">Wifi</string>
+    <string name="menu_ap_scan">Access Points</string>
+    <string name="menu_ap_aware_scan">Aware Devices</string>
+    <string name="menu_ap_direct_scan">Wifi Direct</string>
 
 </resources>

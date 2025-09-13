@@ -34,7 +34,7 @@ object WifiMapper {
                 channelWidth = channelWidth,
                 centerFreq0 = centerFreq0,
                 centerFreq1 = centerFreq1,
-                securityTypes = intArrayOf(),
+                securityTypes = intArrayOf(), // securityTypes is not available below TIRAMISU
                 standard = wifiStandard,
             )
         }

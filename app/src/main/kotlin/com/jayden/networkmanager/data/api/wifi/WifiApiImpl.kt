@@ -16,8 +16,8 @@ class WifiApiImpl(
 
     private val wifiManager = context.applicationContext.getSystemService(WifiManager::class.java)
 
-    private val _apList = MutableStateFlow<MutableList<ScanResult>>(mutableListOf())
-    override val apList: StateFlow<List<ScanResult>> = _apList
+    private val _apList = MutableStateFlow<MutableMap<ScanResult, List<ScanResult.InformationElement>>>(mutableMapOf())
+    override val apList: StateFlow<Map<ScanResult, List<ScanResult.InformationElement>>> = _apList
 
     private val _restarting = MutableStateFlow(false)
     override val restarting: StateFlow<Boolean> = _restarting
@@ -26,7 +26,11 @@ class WifiApiImpl(
     private val scanResultsCallback = object : ScanResultsCallback() {
         override fun onScanResultsAvailable() {
             if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                _apList.tryEmit(wifiManager.scanResults)
+                wifiManager.scanResults.forEach { scanResult ->
+                    if (!_apList.value.contains(scanResult)) {
+                        _apList.tryEmit(mutableMapOf(scanResult to scanResult.informationElements))
+                    }
+                }
             }
         }
     }
@@ -48,7 +52,7 @@ class WifiApiImpl(
         registered = true
 
         if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            _apList.tryEmit(wifiManager.scanResults)
+
         }
     }
 
