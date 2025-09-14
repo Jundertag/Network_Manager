@@ -7,5 +7,10 @@
     <string name="menu_ap_scan">Access Points</string>
     <string name="menu_ap_aware_scan">Aware Devices</string>
     <string name="menu_ap_direct_scan">Wifi Direct</string>
+    <string name="menu_vpn">VPN</string>
+    <string name="menu_vpn_manage">Manager</string>
+    <string name="menu_vpn_packets">Packets</string>
+    <string name="vpn_manage_title">Manage VPN</string>
+    <string name="vpn_manage_start_button">Start VPN</string>
 
 </resources>

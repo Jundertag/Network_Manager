@@ -1,4 +1,4 @@
-package com.jayden.networkmanager.ui.main
+package com.jayden.networkmanager.ui.activities.main
 
 import android.os.Bundle
 import android.util.Log
@@ -8,12 +8,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.jayden.networkmanager.R
 import com.jayden.networkmanager.databinding.ActivityMainBinding
 import com.jayden.networkmanager.presentation.main.MainViewModel
-import dagger.hilt.android.AndroidEntryPoint
-import jakarta.inject.Inject
 
 class MainActivity : AppCompatActivity(
     R.layout.activity_main
 ) {
+    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val pagerAdapter = PagerAdapter(this)
 
     private val viewModel: MainViewModel by viewModels()
@@ -25,8 +24,7 @@ class MainActivity : AppCompatActivity(
         override fun onPageScrollStateChanged(state: Int) {
             when (state) {
                 ViewPager2.SCROLL_STATE_IDLE -> {
-                    binding.navBar.selectedItemId =
-                        pagerAdapter.getItemNavId(binding.viewPager.currentItem)
+                    binding.navBar.selectedItemId = pagerAdapter.getItemNavId(binding.viewPager.currentItem)
                 }
 
                 ViewPager2.SCROLL_STATE_DRAGGING -> {
@@ -40,7 +38,6 @@ class MainActivity : AppCompatActivity(
         }
     }
 
-    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +45,14 @@ class MainActivity : AppCompatActivity(
 
         binding.navBar.setOnItemSelectedListener {
             Log.v(TAG, "NavigationBarView.OnItemSelectedListener: ${it.itemId}")
-            binding.viewPager.currentItem = pagerAdapter.getItemPos(it.itemId)
-            true
+
+            try {
+                binding.viewPager.currentItem = pagerAdapter.getItemPos(it.itemId)
+                true
+            } catch (e: Exception) {
+                Log.w(TAG, "Error: $e")
+                false
+            }
         }
 
         binding.viewPager.adapter = PagerAdapter(this)
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity(
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         binding.viewPager.unregisterOnPageChangeCallback(pageChangeCallback)
+        super.onDestroy()
     }
 }

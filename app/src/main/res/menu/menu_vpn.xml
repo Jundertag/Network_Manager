@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_vpn_manage"
+        android:title="@string/menu_vpn_manage"/>
+
+    <item android:id="@+id/menu_vpn_packets"
+        android:title="@string/menu_vpn_packets"/>
+
+</menu>

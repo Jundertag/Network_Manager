@@ -9,4 +9,8 @@
         android:title="@string/menu_wifi"
         android:icon="@drawable/ic_wifi"/>
 
+    <item android:id="@+id/menu_vpn"
+        android:title="@string/menu_vpn"
+        android:icon="@drawable/ic_vpn"/>
+
 </menu>

@@ -15,12 +15,12 @@
     <color name="item_primary_variant_dark">#1E2433</color>
     <color name="item_primary_variant_light">#FAFAFA</color>
 
-    <color name="item_on_primary_dark">#9FAFC1</color>
+    <color name="item_on_primary_dark">#B2C4D7</color>
     <color name="item_on_primary_light">#646D75</color>
 
     <color name="item_secondary_dark">#29323E</color>
     <color name="item_secondary_light">#8BB1D3</color>
 
-    <color name="item_on_secondary_dark">#1E7CD3</color>
-    <color name="item_on_secondary_light">#1B90F0</color>
+    <color name="item_on_secondary_dark">#B2CAE4</color>
+    <color name="item_on_secondary_light">#58616A</color>
 </resources>

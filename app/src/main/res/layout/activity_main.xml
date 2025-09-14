@@ -28,6 +28,14 @@
             app:menu="@menu/main_nav_menu"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top">
+
+        </androidx.appcompat.widget.Toolbar>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,25 +1,25 @@
-package com.jayden.networkmanager.ui.main
+package com.jayden.networkmanager.ui.fragments.main.wifi
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.jayden.networkmanager.ui.apawarescan.ApAwareScanFragment
-import com.jayden.networkmanager.ui.apscan.ApScanFragment
-import com.jayden.networkmanager.ui.connections.ConnectionsFragment
+import com.jayden.networkmanager.ui.fragments.main.wifi.apawarescan.ApAwareScanFragment
+import com.jayden.networkmanager.ui.fragments.main.wifi.apdirectscan.ApDirectScanFragment
+import com.jayden.networkmanager.ui.fragments.main.wifi.apscan.ApScanFragment
 
 class PagerAdapter(
-    activity: FragmentActivity
-) : FragmentStateAdapter(activity) {
+    fragment: Fragment
+) : FragmentStateAdapter(fragment) {
 
-    private val pages: List<Page> = listOf(Page.Connections, Page.WifiScan)
+    private val pages: List<Page> = listOf(Page.ApScan, Page.ApAwareScan, Page.ApDirectScan)
 
     override fun getItemCount(): Int {
         return pages.size
     }
 
     override fun createFragment(position: Int): Fragment = when (pages[position]) {
-        is Page.Connections -> ConnectionsFragment()
-        is Page.WifiScan -> ApScanFragment()
+        Page.ApScan -> ApScanFragment()
+        Page.ApAwareScan -> ApAwareScanFragment()
+        Page.ApDirectScan -> ApDirectScanFragment()
     }
 
     override fun getItemId(position: Int): Long = pages[position].id

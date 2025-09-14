@@ -5,4 +5,6 @@ import com.jayden.networkmanager.R
 sealed class Page(val id: Long, val navId: Int) {
     data object Connections : Page(0, R.id.menu_connections)
     data object WifiScan : Page(1, R.id.menu_wifi)
+
+    data object VPN : Page(2, R.id.menu_vpn)
 }
